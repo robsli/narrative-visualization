@@ -37,6 +37,8 @@ const Graph = (props) => {
                 data={seasonByTeam}
                 rawData={data}
                 stat={selectedStat}
+                selectedTeam={selectedTeam}
+                updateSelectedTeam={setSelectedTeam}
             />
         </div>
     );

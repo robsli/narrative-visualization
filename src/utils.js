@@ -4,6 +4,8 @@ const getTeamMetricsForSeason = (data, teamAbbrev, season = '2021') => {
             return acc;
         }
 
+        const lastGame = acc[acc.length - 1] || { wins: 0, loses: 0 };
+
         if (game.team1 === teamAbbrev) {
             const gameStats = {
                 date: game.date,
@@ -19,6 +21,8 @@ const getTeamMetricsForSeason = (data, teamAbbrev, season = '2021') => {
                 opponentPostElo: game.elo2_post,
                 opponentPreRaptor: game.raptor2_pre,
                 opponentRaptorProb: game.raptor_prob2,
+                wins: game.score1 > game.score2 ? lastGame.wins + 1 : lastGame.wins,
+                loses: game.score1 < game.score2 ? lastGame.loses + 1 : lastGame.loses,
             }
 
             return acc.concat(gameStats);
@@ -39,6 +43,8 @@ const getTeamMetricsForSeason = (data, teamAbbrev, season = '2021') => {
                 opponentPostElo: game.elo1_post,
                 opponentPreRaptor: game.raptor1_pre,
                 opponentRaptorProb: game.raptor_prob1,
+                wins: game.score2 > game.score1 ? lastGame.wins + 1 : lastGame.wins,
+                loses: game.score2 < game.score1 ? lastGame.loses + 1 : lastGame.loses,
             }
 
             return acc.concat(gameStats);
@@ -106,8 +112,23 @@ const getTeamMetricBounds = (rawData) => {
     })
 }
 
+const getStatAttribute = (stat, datum) => {
+    switch (stat) {
+        case 'elo':
+            return datum.teamPreElo;
+        case 'raptor':
+            return datum.teamPreRaptor;
+        case 'score':
+            return datum.teamScore;
+        default:
+            console.error('Unrecognized statistic category:', stat);
+            return null
+    }
+}
+
 export {
     getMetricBounds,
+    getStatAttribute,
     getTeamMetricBounds,
     getTeamMetricsForSeason,
 }
