@@ -27,13 +27,13 @@ const Controls = (props) => {
     }
 
     return (
-        <div className="flex-nowrap flex items-end w-full space-x-12">
+        <div className="flex-nowrap flex items-end mx-auto space-x-12">
             <div className="flex-nowrap flex space-x-4">
                 <label className="flex flex-col space-y-2">
                     <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
                     <select
                         id="statistic-select"
-                        className="px-3 py-2 leading-tight text-gray-800 border rounded shadow appearance-none"
+                        className="px-3 py-2 leading-tight text-gray-800 border rounded shadow"
                         onChange={({ target }) => updateSelectedStat(target.value)}
                         value={selectedStat}
                     >
