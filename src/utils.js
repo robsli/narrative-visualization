@@ -1,7 +1,19 @@
-const getTeamMetricsForSeason = (data, teamAbbrev, season = '2021') => {
+import { monthNames } from './constants';
+
+const getTeamMetricsForSeason = (data, teamAbbrev, endingMonth = null, season = '2021') => {
     return data.reduce((acc, game) => {
         if (game.season !== season) {
             return acc;
+        }
+
+        if (endingMonth && !!endingMonth) {
+            // ex. 2021-01
+            const endDate = new Date(endingMonth);
+            const gameDate = new Date(game.date);
+
+            if (endDate < gameDate) {
+                return acc;
+            }
         }
 
         const lastGame = acc[acc.length - 1] || { wins: 0, loses: 0 };
@@ -126,8 +138,18 @@ const getStatAttribute = (stat, datum) => {
     }
 }
 
+const getMonthLabel = (date) => {
+    const newDate = new Date(date);
+
+    const year = newDate.getFullYear();
+    const month = monthNames[newDate.getUTCMonth()];
+
+    return `${month} ${year}`
+}
+
 export {
     getMetricBounds,
+    getMonthLabel,
     getStatAttribute,
     getTeamMetricBounds,
     getTeamMetricsForSeason,

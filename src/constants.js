@@ -44,26 +44,38 @@ const statSelectOptions = [
     { value: 'score', label: 'Score' },
 ];
 
-const months = {
-    0: 'January',
-    1: 'February',
-    2: 'March',
-    3: 'April',
-    4: 'May',
-    5: 'June',
-    6: 'July',
-    7: 'August',
-    8: 'September',
-    9: 'October',
-    10: 'November',
-    11: 'December'
-}
+const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+];
+
+const maxDateOptions = [
+    '2021-01',
+    '2021-02',
+    '2021-03',
+    '2021-04',
+    '2021-05',
+    '2021-06',
+    '2021-07',
+    '2021-08',
+];
 
 export {
-    months,
+    monthNames,
     NBA_ELO_CSV,
     NBA_ELO_LATEST_CSV,
     statSelectOptions,
     teamNames,
     teamSelectOptions,
+    maxDateOptions,
 }

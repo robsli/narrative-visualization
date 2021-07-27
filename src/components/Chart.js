@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
 import { getMetricBounds, getStatAttribute } from '../utils';
-import Line from './Line';
+import Lines from './Lines';
 import DataPoints from './DataPoints';
 
 const dimensions = {
@@ -11,8 +11,8 @@ const dimensions = {
 }
 
 const getChartBounds = (stat, bounds) => {
-    const getLower = val => 0.95 * Number(val);
-    const getUpper = val => 1.05 * Number(val);
+    const getLower = val => 0.98 * Number(val);
+    const getUpper = val => 1.02 * Number(val);
 
     switch (stat) {
         case 'elo':
@@ -72,35 +72,40 @@ const Chart = (props) => {
         // Add X grid lines with labels
         const xScale = d3.scaleTime()
             .domain(d3.extent(rawData, d => new Date(d.date)))
-            .range([0, width]);
+            .range([0, width - margin]);
         const xAxis = d3.axisBottom(xScale)
-            .ticks(12)
-            .tickSize(-height);
+            .ticks(d3.timeWeek, '\'%y %b %d')
+            .tickSize(-height + margin);
         newSvg.select('#x-axis').select('*').remove();
         const xAxisGroup = newSvg.select('#x-axis')
-            .attr('transform', `translate(0, ${height})`)
+            .attr('transform', `translate(0, ${height - margin})`)
             .call(xAxis);
         xAxisGroup.select('.domain')
             .attr('class', '');
         xAxisGroup.selectAll('line')
             .attr('class', 'text-gray-200');
         xAxisGroup.selectAll('text')
-            .attr('class', 'font-md text-blue-500');
+            .attr('class', 'text-base text-gray-500 transform -rotate-90 text-right')
+            .attr('y', -6)
+            .attr('x', -margin + 10);
 
         // Add Y grid lines with labels
         const yScale = d3.scaleLinear()
             .domain(getChartBounds(stat, bounds))
-            .range([height, 0]);
+            .range([height - margin , 0]);
         const yAxis = d3.axisLeft(yScale)
             .ticks(5)
-            .tickSize(-width)
+            .tickPadding(20)
+            .tickSize(-width + margin);
         newSvg.select('#y-axis').select('*').remove();
-        const yAxisGroup = newSvg.select('#y-axis').call(yAxis);
+        const yAxisGroup = newSvg.select('#y-axis')
+            .attr('transform', `translate(${margin}, 0})`)
+            .call(yAxis);
         yAxisGroup.select('.domain').remove();
         yAxisGroup.selectAll('line')
             .attr('class', 'text-gray-200');
         yAxisGroup.selectAll('text')
-            .attr('class', 'font-md text-gray-800');
+            .attr('class', 'text-base text-gray-800');
 
         const newDataLineFunc = d3.line()
             .x(d => xScale(new Date(d.date)))
@@ -134,34 +139,31 @@ const Chart = (props) => {
             <h2>Chart</h2>
 
             <svg
-                className="w-full"
+                className="w-full transition-all ease-in-out"
                 ref={svgRef}
                 width={width}
                 height={height + (2 * margin)}
             >
                 <g id="chart-wrapper">
-                    <g id="x-axis"></g>
-                    <g id="y-axis"></g>
-                    <g className="w-full h-full">
-                        { displayData && displayData.map(({ team, games }) => (
-                            <Line
-                                key={`line-${team}`}
-                                isSelected={team === selectedTeam}
-                                pathData={dataLineFunc(games)}
+                    <g id="x-axis" className=""></g>
+                    <g id="y-axis" className=""></g>
+                    { displayData && (
+                        <g className="w-full h-full">
+                            <Lines
+                                data={displayData}
                                 selectedTeam={selectedTeam}
+                                dataLineFunc={dataLineFunc}
                                 updateSelectedTeam={updateSelectedTeam}
                             />
-                        ))}
 
-                        { displayData && (
                             <DataPoints
                                 data={selectedLineData.games}
                                 scaleX={scaleX}
                                 scaleY={scaleY}
                                 stat={stat}
                             />
-                        )}
-                    </g>
+                        </g>
+                    )}
                 </g>
             </svg>
         </div>

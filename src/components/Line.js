@@ -2,28 +2,31 @@ import React, { useState } from 'react';
 
 const Line = (props) => {
     const {
-        isSelected,
         pathData,
         selectedTeam,
+        team,
         updateSelectedTeam,
     } = props;
 
     const [isHovering, setIsHovering] = useState(false);
+
+    const isSelected = team === selectedTeam;
 
     return (
         <path
             fill="none"
             className={`
                 stroke-current cursor-pointer
+                transition-all ease-in-out
                 ${isSelected
-                    ? 'text-gray-700'
+                    ? 'text-gray-600'
                     : isHovering
-                        ? 'text-blue-600'
-                        : 'text-gray-300'}
+                        ? 'text-purple-500'
+                        : 'text-gray-200'}
             `}
             d={pathData}
-            strokeWidth={isSelected ? 8 : 3}
-            onClick={() => updateSelectedTeam(selectedTeam)}
+            strokeWidth={isSelected || isHovering ? 6 : 2}
+            onClick={() => updateSelectedTeam(team)}
             onMouseOver={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         ></path>
