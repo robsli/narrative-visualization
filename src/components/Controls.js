@@ -73,7 +73,7 @@ const Controls = (props) => {
                         onChange={({ target }) => updateMaxDate(target.value)}
                         value={maxDate}
                     >
-                        <option key="all-option" value=''>All</option>
+                        <option key="all-option" value={maxDateOptions[maxDateOptions.length - 1]}>All</option>
                         { maxDateOptions.map((option) => (
                             <option key={option} value={option}>{getMonthLabel(option)}</option>
                         ))}

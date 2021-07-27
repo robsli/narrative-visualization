@@ -27,7 +27,9 @@ const Graph = (props) => {
     }, [data, maxDate]);
 
     return (
-        <div className="flex flex-col items-center w-full px-8 space-y-8">
+        <div className="max-w-screen-2xl flex flex-col items-center w-full px-8 mx-auto space-y-4 border rounded shadow">
+            <h2>Chart</h2>
+
             <Controls
                 selectedStat={selectedStat}
                 selectedTeam={selectedTeam}

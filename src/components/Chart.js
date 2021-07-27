@@ -99,9 +99,7 @@ const Chart = (props) => {
             .tickPadding(20)
             .tickSize(-width + margin);
         newSvg.select('#y-axis').select('*').remove();
-        const yAxisGroup = newSvg.select('#y-axis')
-            .attr('transform', `translate(${margin}, 0})`)
-            .call(yAxis);
+        const yAxisGroup = newSvg.select('#y-axis').call(yAxis);
         yAxisGroup.select('.domain').remove();
         yAxisGroup.selectAll('line')
             .attr('class', 'text-gray-200');
@@ -136,38 +134,34 @@ const Chart = (props) => {
     }, [data, selectedTeam]);
 
     return (
-        <div className="max-w-screen-2xl w-full p-6 border rounded shadow">
-            <h2>Chart</h2>
+        <svg
+            className="w-full transition-all ease-in-out"
+            ref={svgRef}
+            width={width}
+            height={height + (2 * margin)}
+        >
+            <g id="chart-wrapper">
+                <g id="x-axis" className=""></g>
+                <g id="y-axis" className=""></g>
+                { displayData && (
+                    <g className="w-full h-full">
+                        <Lines
+                            data={displayData}
+                            selectedTeam={selectedTeam}
+                            dataLineFunc={dataLineFunc}
+                            updateSelectedTeam={updateSelectedTeam}
+                        />
 
-            <svg
-                className="w-full transition-all ease-in-out"
-                ref={svgRef}
-                width={width}
-                height={height + (2 * margin)}
-            >
-                <g id="chart-wrapper">
-                    <g id="x-axis" className=""></g>
-                    <g id="y-axis" className=""></g>
-                    { displayData && (
-                        <g className="w-full h-full">
-                            <Lines
-                                data={displayData}
-                                selectedTeam={selectedTeam}
-                                dataLineFunc={dataLineFunc}
-                                updateSelectedTeam={updateSelectedTeam}
-                            />
-
-                            <DataPoints
-                                data={selectedLineData.games}
-                                scaleX={scaleX}
-                                scaleY={scaleY}
-                                stat={stat}
-                            />
-                        </g>
-                    )}
-                </g>
-            </svg>
-        </div>
+                        <DataPoints
+                            data={selectedLineData.games}
+                            scaleX={scaleX}
+                            scaleY={scaleY}
+                            stat={stat}
+                        />
+                    </g>
+                )}
+            </g>
+        </svg>
     )
 }
 
