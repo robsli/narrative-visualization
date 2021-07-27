@@ -57,7 +57,6 @@ const Chart = (props) => {
 
     useEffect(() => {
         const newBounds = getMetricBounds(rawData);
-        console.log('bounds:', newBounds);
 
         setBounds(newBounds);
     }, [rawData]);

@@ -13,7 +13,6 @@ function App() {
 
   const getData = async (file) => {
     const latestEloData = await csv(file);
-    console.log('latestEloData:', latestEloData);
 
     setData(latestEloData);
   }

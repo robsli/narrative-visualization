@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+TODO:
+- [ ] Add hover tooltips with information on each game
+- [ ] Add ability to filter and view playoff games
+
 ## Available Scripts
 
 In the project directory, you can run:

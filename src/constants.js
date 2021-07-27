@@ -70,10 +70,19 @@ const maxDateOptions = [
     '2021-08',
 ];
 
+const playoffIdentifiers = {
+    'p': 'Play-In',
+    'q': 'Quarter Finals',
+    's': 'Semi Finals',
+    'c': 'Conference Finals',
+    'f': 'Finals'
+}
+
 export {
     monthNames,
     NBA_ELO_CSV,
     NBA_ELO_LATEST_CSV,
+    playoffIdentifiers,
     statSelectOptions,
     teamNames,
     teamSelectOptions,
