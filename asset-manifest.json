@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/narrative-visualization/static/css/main.bb1763c0.chunk.css",
-    "main.js": "/narrative-visualization/static/js/main.9c611e42.chunk.js",
-    "main.js.map": "/narrative-visualization/static/js/main.9c611e42.chunk.js.map",
-    "runtime-main.js": "/narrative-visualization/static/js/runtime-main.b9ff65ac.js",
-    "runtime-main.js.map": "/narrative-visualization/static/js/runtime-main.b9ff65ac.js.map",
-    "static/js/2.2cf31e42.chunk.js": "/narrative-visualization/static/js/2.2cf31e42.chunk.js",
-    "static/js/2.2cf31e42.chunk.js.map": "/narrative-visualization/static/js/2.2cf31e42.chunk.js.map",
-    "static/js/3.f1848a2e.chunk.js": "/narrative-visualization/static/js/3.f1848a2e.chunk.js",
-    "static/js/3.f1848a2e.chunk.js.map": "/narrative-visualization/static/js/3.f1848a2e.chunk.js.map",
+    "main.css": "/narrative-visualization/static/css/main.2b4ac07b.chunk.css",
+    "main.js": "/narrative-visualization/static/js/main.02ae5578.chunk.js",
+    "main.js.map": "/narrative-visualization/static/js/main.02ae5578.chunk.js.map",
+    "runtime-main.js": "/narrative-visualization/static/js/runtime-main.a6fa5067.js",
+    "runtime-main.js.map": "/narrative-visualization/static/js/runtime-main.a6fa5067.js.map",
+    "static/js/2.e20de543.chunk.js": "/narrative-visualization/static/js/2.e20de543.chunk.js",
+    "static/js/2.e20de543.chunk.js.map": "/narrative-visualization/static/js/2.e20de543.chunk.js.map",
+    "static/js/3.6b7c44df.chunk.js": "/narrative-visualization/static/js/3.6b7c44df.chunk.js",
+    "static/js/3.6b7c44df.chunk.js.map": "/narrative-visualization/static/js/3.6b7c44df.chunk.js.map",
     "index.html": "/narrative-visualization/index.html",
-    "static/css/main.bb1763c0.chunk.css.map": "/narrative-visualization/static/css/main.bb1763c0.chunk.css.map",
-    "static/js/2.2cf31e42.chunk.js.LICENSE.txt": "/narrative-visualization/static/js/2.2cf31e42.chunk.js.LICENSE.txt"
+    "static/css/main.2b4ac07b.chunk.css.map": "/narrative-visualization/static/css/main.2b4ac07b.chunk.css.map",
+    "static/js/2.e20de543.chunk.js.LICENSE.txt": "/narrative-visualization/static/js/2.e20de543.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.b9ff65ac.js",
-    "static/js/2.2cf31e42.chunk.js",
-    "static/css/main.bb1763c0.chunk.css",
-    "static/js/main.9c611e42.chunk.js"
+    "static/js/runtime-main.a6fa5067.js",
+    "static/js/2.e20de543.chunk.js",
+    "static/css/main.2b4ac07b.chunk.css",
+    "static/js/main.02ae5578.chunk.js"
   ]
 }
