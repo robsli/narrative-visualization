@@ -69,8 +69,10 @@ const Chart = (props) => {
             .attr('transform', `translate(${margin}, ${margin})`);
 
         // Add X grid lines with labels
+        const xDomain = d3.extent(rawData, d => new Date(d.date));
+        const lastDate = xDomain[1].setDate(xDomain[1].getDate() + 10);
         const xScale = d3.scaleTime()
-            .domain(d3.extent(rawData, d => new Date(d.date)))
+            .domain([xDomain[0], lastDate])
             .range([0, width - margin]);
         const xAxis = d3.axisBottom(xScale)
             .ticks(d3.timeWeek, '\'%y %b %d')
