@@ -3,6 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 TODO:
+- [ ] Add nice toggle button for narrative visualization
 - [ ] Add hover tooltips with information on each game
 - [ ] Add ability to filter and view playoff games
 

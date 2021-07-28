@@ -6,12 +6,14 @@ import { getMonthLabel } from '../utils';
 
 const Controls = (props) => {
     const {
+        maxDate,
+        narrationMode,
         selectedStat,
         selectedTeam,
-        maxDate,
+        updateMaxDate,
+        updateNarrationMode,
         updateSelectedStat,
         updateSelectedTeam,
-        updateMaxDate,
     } = props;
 
     const nextMonth = () => {
@@ -28,6 +30,19 @@ const Controls = (props) => {
 
     return (
         <div className="flex-nowrap flex items-end mx-auto space-x-12">
+            <div>
+                <label className="flex flex-col space-y-2">
+                <span className="text-sm font-medium text-gray-500 uppercase">Visualization Mode</span>
+                    <button
+                        className="nowrap flex overflow-hidden leading-tight text-gray-800 border rounded-full shadow"
+                        onClick={() => updateNarrationMode(!narrationMode)}
+                    >
+                        <span className={`block px-3 py-2 ${narrationMode ? 'text-white bg-green-500' : 'bg-gray-100 text-gray-500'}`}>Narrative</span>
+                        <span className={`block px-3 py-2 ${narrationMode ? 'bg-gray-100 text-gray-500' : 'text-white bg-green-500'}`}>Exploratory</span>
+                    </button>
+                </label>
+            </div>
+
             <div className="flex-nowrap flex space-x-4">
                 <label className="flex flex-col space-y-2">
                     <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
@@ -84,6 +99,11 @@ const Controls = (props) => {
                     disabled={!maxDate || maxDateOptions.indexOf(maxDate) >= maxDateOptions.length - 1}
                     onClick={nextMonth}
                 >{`>`}</button>
+            </div>
+
+            <div>
+                TODO: add legend
+
             </div>
         </div>
     );

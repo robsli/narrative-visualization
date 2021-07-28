@@ -9,6 +9,7 @@ const Graph = (props) => {
     const { data } = props;
 
     // Controls State
+    const [narrationMode, setNarrationMode] = useState(true);
     const [selectedStat, setSelectedStat] = useState('elo');
     const [selectedTeam, setSelectedTeam] = useState('MIL');
     const [maxDate, setMaxDate] = useState('2021-01');
@@ -27,20 +28,23 @@ const Graph = (props) => {
     }, [data, maxDate]);
 
     return (
-        <div className="max-w-screen-2xl flex flex-col items-center w-full px-8 mx-auto space-y-4 border rounded shadow">
-            <h2>Chart</h2>
+        <div className="max-w-screen-2xl flex flex-col items-center w-full p-8 mx-auto space-y-4 border rounded shadow">
+            {/* <h2 className="text-lg">Chart</h2> */}
 
             <Controls
+                maxDate={maxDate}
+                narrationMode={narrationMode}
                 selectedStat={selectedStat}
                 selectedTeam={selectedTeam}
-                maxDate={maxDate}
+                updateMaxDate={setMaxDate}
+                updateNarrationMode={setNarrationMode}
                 updateSelectedStat={setSelectedStat}
                 updateSelectedTeam={setSelectedTeam}
-                updateMaxDate={setMaxDate}
             />
 
             <Chart
                 data={seasonByTeam}
+                narrationMode={narrationMode}
                 rawData={data}
                 stat={selectedStat}
                 selectedTeam={selectedTeam}

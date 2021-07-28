@@ -30,6 +30,7 @@ const getChartBounds = (stat, bounds) => {
 const Chart = (props) => {
     const {
         data,
+        narrationMode,
         rawData,
         selectedTeam,
         stat,
@@ -153,6 +154,8 @@ const Chart = (props) => {
                         />
 
                         <DataPoints
+                            chartHeight={height}
+                            chartWidth={width}
                             data={selectedLineData.games}
                             scaleX={scaleX}
                             scaleY={scaleY}

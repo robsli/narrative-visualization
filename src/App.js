@@ -27,7 +27,7 @@ function App() {
   }, []);
 
   return (
-    <main className="w-full">
+    <main className="md:px-4 lg:px-8 w-full px-2 mx-auto">
       <Header />
       <Nav />
       <section className="">
