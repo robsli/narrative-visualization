@@ -1,12 +1,27 @@
-import { monthNames } from './constants';
+import { monthNames, playoffOrder } from './constants';
 
-const getTeamMetricsForSeason = (data, teamAbbrev, endingMonth = null, season = '2021') => {
+const getTeamMetricsForSeason = (
+    data,
+    teamAbbrev,
+    endingMonth = null,
+    showOnlyPlayoffs = false,
+    playoffRound = null,
+    season = '2021'
+) => {
     return data.reduce((acc, game) => {
         if (game.season !== season) {
             return acc;
         }
 
-        if (endingMonth && !!endingMonth) {
+        if (showOnlyPlayoffs
+            && (!game.playoff
+                || playoffOrder.indexOf(game.playoff) > playoffOrder.indexOf(playoffRound)
+            )
+        ) {
+            return acc;
+        }
+
+        if (!showOnlyPlayoffs && endingMonth && !!endingMonth) {
             // ex. 2021-01
             const endDate = new Date(endingMonth);
             const gameDate = new Date(game.date);
@@ -16,47 +31,57 @@ const getTeamMetricsForSeason = (data, teamAbbrev, endingMonth = null, season = 
             }
         }
 
-        const lastGame = acc[acc.length - 1] || { wins: 0, loses: 0 };
+        const lastGame = acc.length > 0
+            ? acc[acc.length - 1]
+            : { wins: 0, losses: 0 };
 
         if (game.team1 === teamAbbrev) {
+            const teamScore = Number(game.score1);
+            const opponentScore = Number(game.score2);
+
             const gameStats = {
                 date: game.date,
                 playoff: game.playoff,
-                teamScore: game.score1,
+                team: game.team1,
+                teamScore,
                 teamPreElo: game.elo1_pre,
                 teamPostElo: game.elo1_post,
                 teamPreRaptor: game.raptor1_pre,
                 teamRaptorProb: game.raptor_prob1,
                 opponent: game.team2,
-                opponentScore: game.score2,
+                opponentScore,
                 opponentPreElo: game.elo2_pre,
                 opponentPostElo: game.elo2_post,
                 opponentPreRaptor: game.raptor2_pre,
                 opponentRaptorProb: game.raptor_prob2,
-                wins: game.score1 > game.score2 ? lastGame.wins + 1 : lastGame.wins,
-                loses: game.score1 < game.score2 ? lastGame.loses + 1 : lastGame.loses,
+                wins: teamScore > opponentScore ? lastGame.wins + 1 : lastGame.wins,
+                losses: teamScore < opponentScore ? lastGame.losses + 1 : lastGame.losses,
             }
 
             return acc.concat(gameStats);
         }
 
         if (game.team2 === teamAbbrev) {
+            const teamScore = Number(game.score2);
+            const opponentScore = Number(game.score1);
+
             const gameStats = {
                 date: game.date,
                 playoff: game.playoff,
-                teamScore: game.score2,
+                team: game.team2,
+                teamScore,
                 teamPreElo: game.elo2_pre,
                 teamPostElo: game.elo2_post,
                 teamPreRaptor: game.raptor2_pre,
                 teamRaptorProb: game.raptor_prob2,
                 opponent: game.team1,
-                opponentScore: game.score1,
+                opponentScore,
                 opponentPreElo: game.elo1_pre,
                 opponentPostElo: game.elo1_post,
                 opponentPreRaptor: game.raptor1_pre,
                 opponentRaptorProb: game.raptor_prob1,
-                wins: game.score2 > game.score1 ? lastGame.wins + 1 : lastGame.wins,
-                loses: game.score2 < game.score1 ? lastGame.loses + 1 : lastGame.loses,
+                wins: teamScore > opponentScore ? lastGame.wins + 1 : lastGame.wins,
+                losses: teamScore < opponentScore ? lastGame.losses + 1 : lastGame.losses,
             }
 
             return acc.concat(gameStats);

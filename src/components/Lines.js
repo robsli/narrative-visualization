@@ -11,15 +11,17 @@ const Lines = (props) => {
     } = props;
 
     return (
-        <g className="w=full h-full" id="data-lines-wrapper">
+        <g className="w-full h-full" id="data-lines-wrapper">
             { data && data.map(({ team, games }) => (
-                <Line
-                    key={`line-${team}`}
-                    pathData={dataLineFunc(games)}
-                    selectedTeam={selectedTeam}
-                    team={team}
-                    updateSelectedTeam={updateSelectedTeam}
-                />
+                games && games.length && (
+                    <Line
+                        key={`line-${team}`}
+                        pathData={dataLineFunc(games)}
+                        selectedTeam={selectedTeam}
+                        team={team}
+                        updateSelectedTeam={updateSelectedTeam}
+                    />
+                )
             ))}
         </g>
     );

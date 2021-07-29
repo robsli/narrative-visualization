@@ -18,6 +18,8 @@ const DataPoint = (props) => {
 
     const [isHovering, setIsHovering] = useState(false);
 
+    const wonGame = gameData.teamScore > gameData.opponentScore;
+
     return (
         <g
             onMouseEnter={() => setIsHovering(true)}
@@ -29,12 +31,12 @@ const DataPoint = (props) => {
                     chartWidth={chartWidth}
                     x={x}
                     y={y}
-                    selectedData={gameData}
+                    gameData={gameData}
                 />
             )}
 
             <circle
-                className="text-blue-400 cursor-pointer fill-current"
+                className={`${wonGame ? 'text-green-500' : 'text-red-500'} cursor-pointer fill-current animate-pulse`}
                 cx={x}
                 cy={y}
                 r={7}
@@ -49,10 +51,10 @@ const DataPoint = (props) => {
 
             { gameData.teamScore > gameData.opponentScore && (
                 <circle
-                    className="animate-pulse text-blue-500 cursor-pointer fill-current"
+                    className={`${wonGame ? 'text-green-500' : 'text-red-500'} animate-pulse cursor-pointer fill-current`}
                     cx={x}
                     cy={y}
-                    r={2}
+                    r={3}
                 ></circle>
             )}
         </g>

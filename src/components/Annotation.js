@@ -9,7 +9,7 @@ const Annotation = (props) => {
         chartWidth,
         x,
         y,
-        selectedData,
+        gameData,
     } = props;
 
     const gRef = useRef();
@@ -21,16 +21,20 @@ const Annotation = (props) => {
         ? Math.max(-100, - y + 40)
         : Math.min(100, chartHeight - y - 20);
 
+    const { team, teamScore, opponent, opponentScore, wins, losses } = gameData || {};
+    const wonGame = teamScore > opponentScore;
+    const label = wonGame
+        ? `${team} improves to ${wins} - ${losses}`
+        : `${team} slides to ${wins} - ${losses}`
+
     const annotations = [{
+        x, y, dy, dx,
         note: {
-            label: 'Some cool stuff',
-            title: 'Annotation Title'
+            label,
+            title: `${wonGame ? 'WIN against' : 'LOSS to'} ${opponent} (${teamScore} - ${opponentScore})`,
+            bgPadding: 20,
         },
-        className: 'text-blue-500',
-        x,
-        y,
-        dy,
-        dx,
+        color: wonGame ? '#10B981' : '#EF4444',
     }]
 
     const makeAnnotations = annotation()

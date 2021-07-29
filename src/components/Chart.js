@@ -33,6 +33,7 @@ const Chart = (props) => {
         narrationMode,
         rawData,
         selectedTeam,
+        showOnlyPlayoffs,
         stat,
         updateSelectedTeam,
     } = props;
@@ -67,10 +68,13 @@ const Chart = (props) => {
 
         // Get the root container
         const newSvg = svgEl.select('#chart-wrapper')
-            .attr('transform', `translate(${margin}, ${margin})`);
+            .attr('transform', `translate(${margin}, 0)`);
 
         // Add X grid lines with labels
-        const xDomain = d3.extent(rawData, d => new Date(d.date));
+        const dateRangeData = showOnlyPlayoffs
+            ? rawData.filter(game => !!game.playoff)
+            : rawData;
+        const xDomain = d3.extent(dateRangeData, d => new Date(d.date));
         const lastDate = xDomain[1].setDate(xDomain[1].getDate() + 10);
         const xScale = d3.scaleTime()
             .domain([xDomain[0], lastDate])
@@ -115,7 +119,23 @@ const Chart = (props) => {
         setScaleY(() => yScale);
         setDataLineFunc(() => newDataLineFunc);
 
-    }, [bounds, height, width, margin, rawData, stat]);
+    }, [bounds, height, width, margin, rawData, stat, showOnlyPlayoffs]);
+
+    useEffect(() => {
+        if (narrationMode && data) {
+            const gameWithHighestPostElo = Object.values(data).reduce((highestEloGame, games) => {
+                const lastGame = games[games.length - 1];
+
+                return Number(lastGame.teamPostElo) > Number(highestEloGame.teamPostElo)
+                    ? lastGame
+                    : highestEloGame;
+            }, { teamPostElo: 0 });
+
+            if (gameWithHighestPostElo && gameWithHighestPostElo.team) {
+                updateSelectedTeam(gameWithHighestPostElo.team);
+            }
+        }
+    }, [narrationMode, data, updateSelectedTeam])
 
     useEffect(() => {
         if (data) {
@@ -130,16 +150,16 @@ const Chart = (props) => {
             }, { selectedTeamData: null, orderedData: [] });
 
             setSelectedLineData(selectedTeamData);
-            setDisplayData([...orderedData, selectedTeamData]);
+            setDisplayData([...orderedData, selectedTeamData].filter(d => d));
         }
-    }, [data, selectedTeam]);
+    }, [data, selectedTeam, narrationMode]);
 
     return (
         <svg
             className="w-full transition-all ease-in-out"
             ref={svgRef}
             width={width}
-            height={height + (2 * margin)}
+            height={height + margin}
         >
             <g id="chart-wrapper">
                 <g id="x-axis" className=""></g>
@@ -153,14 +173,16 @@ const Chart = (props) => {
                             updateSelectedTeam={updateSelectedTeam}
                         />
 
-                        <DataPoints
-                            chartHeight={height}
-                            chartWidth={width}
-                            data={selectedLineData.games}
-                            scaleX={scaleX}
-                            scaleY={scaleY}
-                            stat={stat}
-                        />
+                        {selectedLineData && (
+                            <DataPoints
+                                chartHeight={height}
+                                chartWidth={width}
+                                data={selectedLineData.games}
+                                scaleX={scaleX}
+                                scaleY={scaleY}
+                                stat={stat}
+                            />
+                        )}
                     </g>
                 )}
             </g>
