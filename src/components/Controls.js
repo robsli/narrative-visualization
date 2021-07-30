@@ -54,6 +54,22 @@ const Controls = (props) => {
                 </button>
             </label>
 
+            <label className="flex flex-col space-y-2">
+                <span className="text-sm font-medium text-gray-500 uppercase">Show Only Playoffs</span>
+                <button
+                    className={`
+                        nowrap flex items-center w-16 p-1 overflow-hidden border rounded-full shadow-md
+                        ${showOnlyPlayoffs ? 'bg-green-500' : 'bg-gray-100'}
+                    `}
+                    onClick={() => updateShowOnlyPlayoffs(!showOnlyPlayoffs)}
+                    disabled={narrativeMode} // TODO: remove this once playoff annotations are complete & logic is done.
+                >
+                    <div className={`block w-7 h-7 rounded-full border-2
+                        ${showOnlyPlayoffs ? 'ml-auto border-white bg-white' : 'mr-auto bg-gray-50 border-gray-400'}
+                    `}></div>
+                </button>
+            </label>
+
             {/* Normal Season Date Selector */}
             { !showOnlyPlayoffs && (
                 <div className="flex-nowrap flex items-end ml-8 space-x-2">
@@ -115,23 +131,6 @@ const Controls = (props) => {
 
             {!narrativeMode && (
                 <>
-                    <label className="flex flex-col space-y-2">
-                        <span className="text-sm font-medium text-gray-500 uppercase">Show Only Playoffs</span>
-                        <button
-                            className={`
-                                nowrap flex items-center w-16 p-1 overflow-hidden border rounded-full shadow-md
-                                disabled:cursor-not-allowed
-                                ${showOnlyPlayoffs ? 'bg-green-500' : 'bg-gray-100'}
-                            `}
-                            onClick={() => updateShowOnlyPlayoffs(!showOnlyPlayoffs)}
-                            disabled={narrativeMode}
-                        >
-                            <div className={`block w-7 h-7 rounded-full border-2
-                                ${showOnlyPlayoffs ? 'ml-auto border-white bg-white' : 'mr-auto bg-gray-50 border-gray-400'}
-                            `}></div>
-                        </button>
-                    </label>
-
                     <label className="flex flex-col space-y-2">
                         <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
                         <select
