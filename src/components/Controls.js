@@ -8,13 +8,13 @@ import { playoffOrder, playoffIdentifiers } from '../constants';
 const Controls = (props) => {
     const {
         maxDate,
-        narrationMode,
+        narrativeMode,
         playoffRound,
         selectedStat,
         selectedTeam,
         showOnlyPlayoffs,
         updateMaxDate,
-        updateNarrationMode,
+        updateNarrativeMode,
         updatePlayoffRound,
         updateSelectedStat,
         updateSelectedTeam,
@@ -42,63 +42,17 @@ const Controls = (props) => {
     }
 
     return (
-        <div className="flex-nowrap flex items-end justify-start w-full px-16 space-x-12">
+        <div className="lg:flex-nowrap lg:space-x-12 lg:space-y-0 flex flex-wrap items-end justify-start w-full px-16 space-y-4">
             <label className="flex flex-col space-y-2">
                 <span className="text-sm font-medium text-gray-500 uppercase">Visualization Mode</span>
                 <button
-                    className="nowrap flex overflow-hidden leading-tight text-gray-800 border rounded-full shadow"
-                    onClick={() => updateNarrationMode(!narrationMode)}
+                    className="nowrap flex overflow-hidden leading-tight text-gray-800 border rounded-full shadow-sm"
+                    onClick={() => updateNarrativeMode(!narrativeMode)}
                 >
-                    <span className={`block px-3 py-2 ${narrationMode ? 'text-white bg-green-500' : 'bg-gray-100 text-gray-400'}`}>Narrative</span>
-                    <span className={`block px-3 py-2 ${narrationMode ? 'bg-gray-100 text-gray-400' : 'text-white bg-green-500'}`}>Exploratory</span>
+                    <span className={`block px-3 py-2 ${narrativeMode ? 'text-white bg-green-500 shadow' : 'bg-gray-100 text-gray-400 shadow-inner'}`}>Narrative</span>
+                    <span className={`block px-3 py-2 ${narrativeMode ? 'bg-gray-100 text-gray-400 shadow-inner' : 'text-white bg-green-500 shadow'}`}>Exploratory</span>
                 </button>
             </label>
-
-            <label className="flex flex-col space-y-2">
-                <span className="text-sm font-medium text-gray-500 uppercase">Show Only Playoffs</span>
-                <button
-                    className={`
-                        nowrap flex items-center w-16 p-1 overflow-hidden border rounded-full shadow-md
-                        ${showOnlyPlayoffs ? 'bg-green-500' : 'bg-gray-100'}
-                    `}
-                    onClick={() => updateShowOnlyPlayoffs(!showOnlyPlayoffs)}
-                >
-                    <div className={`block w-7 h-7 rounded-full border-2
-                        ${showOnlyPlayoffs ? 'ml-auto border-white bg-white' : 'mr-auto bg-gray-50 border-gray-400'}
-                    `}></div>
-                </button>
-            </label>
-
-            <div className="flex-nowrap flex space-x-4">
-                <label className="flex flex-col space-y-2">
-                    <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
-                    <select
-                        id="statistic-select"
-                        className="px-3 py-2 leading-tight text-gray-800 border rounded shadow"
-                        onChange={({ target }) => updateSelectedStat(target.value)}
-                        value={selectedStat}
-                    >
-                        { statSelectOptions.map((team) => (
-                            <option key={team.value} value={team.value}>{team.label}</option>
-                        ))}
-                    </select>
-                </label>
-
-                <label className="flex flex-col space-y-2">
-                    <span className="text-sm font-medium text-gray-500 uppercase">Team</span>
-                    <select
-                        id="team-select"
-                        className="px-3 py-2 leading-tight text-gray-800 border rounded shadow"
-                        onChange={({ target }) => updateSelectedTeam(target.value)}
-                        value={selectedTeam}
-                    >
-                        <option value=''>All</option>
-                        { teamSelectOptions.map((team) => (
-                            <option key={team.value} value={team.value}>{team.label}</option>
-                        ))}
-                    </select>
-                </label>
-            </div>
 
             {/* Normal Season Date Selector */}
             { !showOnlyPlayoffs && (
@@ -112,11 +66,11 @@ const Controls = (props) => {
                         <span className="text-sm font-medium text-gray-500 uppercase">Max Date</span>
                         <select
                             id="statistic-select"
-                            className="px-3 py-2 leading-tight text-gray-800 border rounded shadow"
+                            className="w-48 px-3 py-2 leading-tight text-gray-800 border rounded shadow"
                             onChange={({ target }) => updateMaxDate(target.value)}
                             value={maxDate}
                         >
-                            <option key="all-option" value={maxDateOptions[maxDateOptions.length - 1]}>All</option>
+                            <option key="all-option" value={maxDateOptions[maxDateOptions.length - 1]}>Season</option>
                             { maxDateOptions.map((option) => (
                                 <option key={option} value={option}>{getMonthLabel(option)}</option>
                             ))}
@@ -131,7 +85,7 @@ const Controls = (props) => {
             )}
 
             {/* Playoff Selector */}
-            { showOnlyPlayoffs && (
+            { showOnlyPlayoffs && !narrativeMode && (
                 <div className="flex-nowrap flex items-end ml-8 space-x-2">
                     <button
                         className="disabled:cursor-not-allowed disabled:text-gray-200 h-max-content px-3 py-2 leading-tight text-gray-800 border rounded shadow"
@@ -142,7 +96,7 @@ const Controls = (props) => {
                         <span className="text-sm font-medium text-gray-500 uppercase">Playoff Round</span>
                         <select
                             id="statistic-select"
-                            className="px-3 py-2 leading-tight text-gray-800 border rounded shadow"
+                            className="w-48 px-3 py-2 leading-tight text-gray-800 border rounded shadow"
                             onChange={({ target }) => updatePlayoffRound(target.value)}
                             value={playoffRound}
                         >
@@ -157,6 +111,58 @@ const Controls = (props) => {
                         onClick={nextRound}
                     >{`>`}</button>
                 </div>
+            )}
+
+            {!narrativeMode && (
+                <>
+                    <label className="flex flex-col space-y-2">
+                        <span className="text-sm font-medium text-gray-500 uppercase">Show Only Playoffs</span>
+                        <button
+                            className={`
+                                nowrap flex items-center w-16 p-1 overflow-hidden border rounded-full shadow-md
+                                disabled:cursor-not-allowed
+                                ${showOnlyPlayoffs ? 'bg-green-500' : 'bg-gray-100'}
+                            `}
+                            onClick={() => updateShowOnlyPlayoffs(!showOnlyPlayoffs)}
+                            disabled={narrativeMode}
+                        >
+                            <div className={`block w-7 h-7 rounded-full border-2
+                                ${showOnlyPlayoffs ? 'ml-auto border-white bg-white' : 'mr-auto bg-gray-50 border-gray-400'}
+                            `}></div>
+                        </button>
+                    </label>
+
+                    <label className="flex flex-col space-y-2">
+                        <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
+                        <select
+                            id="statistic-select"
+                            className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow cursor-pointer"
+                            disabled={narrativeMode}
+                            onChange={({ target }) => updateSelectedStat(target.value)}
+                            value={selectedStat}
+                        >
+                            { statSelectOptions.map((team) => (
+                                <option key={team.value} value={team.value}>{team.label}</option>
+                            ))}
+                        </select>
+                    </label>
+
+                    <label className="flex flex-col space-y-2">
+                        <span className="text-sm font-medium text-gray-500 uppercase">Team</span>
+                        <select
+                            id="team-select"
+                            className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow"
+                            onChange={({ target }) => updateSelectedTeam(target.value)}
+                            value={selectedTeam}
+                            disabled={narrativeMode}
+                        >
+                            <option value=''>All</option>
+                            { teamSelectOptions.map((team) => (
+                                <option key={team.value} value={team.value}>{team.label}</option>
+                            ))}
+                        </select>
+                    </label>
+                </>
             )}
         </div>
     );

@@ -4,14 +4,18 @@ import * as d3 from 'd3';
 import { getMetricBounds, getStatAttribute } from '../utils';
 import Lines from './Lines';
 import DataPoints from './DataPoints';
+import NarrativeAnnotations from './NarrativeAnnotations';
+
+import { regularSeasonAnnotations, playoffsAnnotations } from '../narrativeAnnotations';
 
 const dimensions = {
-    height: 800,
+    maxHeight: 800,
+    minWidth: 800,
     margin: 64,
 }
 
 const getChartBounds = (stat, bounds) => {
-    const getLower = val => 0.98 * Number(val);
+    const getLower = val => 0.99 * Number(val);
     const getUpper = val => 1.02 * Number(val);
 
     switch (stat) {
@@ -30,7 +34,8 @@ const getChartBounds = (stat, bounds) => {
 const Chart = (props) => {
     const {
         data,
-        narrationMode,
+        maxDate,
+        narrativeMode,
         rawData,
         selectedTeam,
         showOnlyPlayoffs,
@@ -38,13 +43,15 @@ const Chart = (props) => {
         updateSelectedTeam,
     } = props;
 
-    const { height, margin } = dimensions;
+    const { maxHeight, minWidth, margin } = dimensions;
 
     const svgRef = useRef();
 
     const [bounds, setBounds] = useState({});
     const [width, setWidth] = useState();
+    const [height, setHeight] = useState();
     const [displayData, setDisplayData] = useState();
+    const [narrativeAnnotationData, setNarrativeAnnotationData] = useState();
 
     const [scaleX, setScaleX] = useState(() => () => {});
     const [scaleY, setScaleY] = useState(() => () => {});
@@ -52,10 +59,24 @@ const Chart = (props) => {
     const [selectedLineData, setSelectedLineData] = useState([]);
 
     useEffect(() => {
-        if (svgRef && svgRef.current) {
-            setWidth(svgRef.current.parentElement.clientWidth - margin);
+        const handleResize = () => {
+            if (svgRef && svgRef.current) {
+                const newWidth = Math.max(minWidth, svgRef.current.parentElement.clientWidth - margin)
+                const newHeight = Math.min(maxHeight, newWidth * 1.2);
+                setWidth(newWidth);
+                setHeight(newHeight);
+            }
         }
-    }, [svgRef, margin]);
+
+        if (!width && !height) {
+            handleResize();
+        }
+        window.addEventListener('resize', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [svgRef, margin, width, height, minWidth, maxHeight]);
 
     useEffect(() => {
         const newBounds = getMetricBounds(rawData);
@@ -122,7 +143,7 @@ const Chart = (props) => {
     }, [bounds, height, width, margin, rawData, stat, showOnlyPlayoffs]);
 
     useEffect(() => {
-        if (narrationMode && data) {
+        if (narrativeMode && data) {
             const gameWithHighestPostElo = Object.values(data).reduce((highestEloGame, games) => {
                 const lastGame = games[games.length - 1];
 
@@ -134,8 +155,18 @@ const Chart = (props) => {
             if (gameWithHighestPostElo && gameWithHighestPostElo.team) {
                 updateSelectedTeam(gameWithHighestPostElo.team);
             }
+
+            if (showOnlyPlayoffs) {
+                // TODO
+            } else {
+                const annotations = regularSeasonAnnotations.filter(annotation => {
+                    return (new Date(annotation.date)) <= (new Date(maxDate));
+                })
+
+                setNarrativeAnnotationData(annotations);
+            }
         }
-    }, [narrationMode, data, updateSelectedTeam])
+    }, [narrativeMode, data, updateSelectedTeam, maxDate, showOnlyPlayoffs])
 
     useEffect(() => {
         if (data) {
@@ -152,40 +183,51 @@ const Chart = (props) => {
             setSelectedLineData(selectedTeamData);
             setDisplayData([...orderedData, selectedTeamData].filter(d => d));
         }
-    }, [data, selectedTeam, narrationMode]);
+    }, [data, selectedTeam, narrativeMode]);
 
     return (
         <svg
-            className="w-full transition-all ease-in-out"
+            className="w-full h-full transition-all ease-in-out"
             ref={svgRef}
             width={width}
             height={height + margin}
         >
-            <g id="chart-wrapper">
-                <g id="x-axis" className=""></g>
-                <g id="y-axis" className=""></g>
-                { displayData && (
-                    <g className="w-full h-full">
-                        <Lines
-                            data={displayData}
-                            selectedTeam={selectedTeam}
-                            dataLineFunc={dataLineFunc}
-                            updateSelectedTeam={updateSelectedTeam}
-                        />
-
-                        {selectedLineData && (
-                            <DataPoints
-                                chartHeight={height}
-                                chartWidth={width}
-                                data={selectedLineData.games}
-                                scaleX={scaleX}
-                                scaleY={scaleY}
-                                stat={stat}
+            {width && height && (
+                <g id="chart-wrapper">
+                    <g id="x-axis" className=""></g>
+                    <g id="y-axis" className=""></g>
+                    { displayData && (
+                        <g className="w-full h-full">
+                            <Lines
+                                data={displayData}
+                                selectedTeam={selectedTeam}
+                                dataLineFunc={dataLineFunc}
+                                updateSelectedTeam={updateSelectedTeam}
                             />
-                        )}
-                    </g>
-                )}
-            </g>
+
+                            {selectedLineData && (
+                                <DataPoints
+                                    chartHeight={height}
+                                    chartWidth={width}
+                                    data={selectedLineData.games}
+                                    narrativeMode={narrativeMode}
+                                    scaleX={scaleX}
+                                    scaleY={scaleY}
+                                    stat={stat}
+                                />
+                            )}
+
+                            {narrativeMode && narrativeAnnotationData && (
+                                <NarrativeAnnotations
+                                    scaleX={scaleX}
+                                    scaleY={scaleY}
+                                    gameData={narrativeAnnotationData}
+                                />
+                            )}
+                        </g>
+                    )}
+                </g>
+            )}
         </svg>
     )
 }

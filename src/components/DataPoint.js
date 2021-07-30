@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 import { getStatAttribute } from '../utils';
-import Annotation from './Annotation';
+import GameAnnotation from './GameAnnotation';
 
 const DataPoint = (props) => {
     const {
         chartHeight,
         chartWidth,
         gameData,
+        narrativeMode,
         scaleX,
         scaleY,
         stat,
@@ -25,8 +26,8 @@ const DataPoint = (props) => {
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
-            {isHovering && (
-                <Annotation
+            {isHovering && !narrativeMode && (
+                <GameAnnotation
                     chartHeight={chartHeight}
                     chartWidth={chartWidth}
                     x={x}

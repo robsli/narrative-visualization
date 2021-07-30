@@ -7,6 +7,7 @@ const DataPoints = (props) => {
         chartHeight,
         chartWidth,
         data,
+        narrativeMode,
         scaleX,
         scaleY,
         stat,
@@ -20,6 +21,7 @@ const DataPoints = (props) => {
                     chartHeight={chartHeight}
                     chartWidth={chartWidth}
                     gameData={game}
+                    narrativeMode={narrativeMode}
                     scaleX={scaleX}
                     scaleY={scaleY}
                     stat={stat}

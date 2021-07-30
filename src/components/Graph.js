@@ -10,7 +10,7 @@ const Graph = (props) => {
     const { data } = props;
 
     // Controls State
-    const [narrationMode, setNarrationMode] = useState(true);
+    const [narrativeMode, setNarrativeMode] = useState(true);
     const [selectedStat, setSelectedStat] = useState('elo');
     const [selectedTeam, setSelectedTeam] = useState('MIL');
     const [maxDate, setMaxDate] = useState('2021-01');
@@ -26,6 +26,17 @@ const Graph = (props) => {
         } else {
             setPlayoffRound(null);
         }
+    }
+
+    const updateNarrativeMode = (narrativeMode) => {
+        if (narrativeMode) {
+            setSelectedStat('elo');
+            setSelectedTeam('');
+            setShowOnlyPlayoffs(false);
+            setPlayoffRound(null);
+        }
+
+        setNarrativeMode(narrativeMode);
     }
 
     useEffect(() => {
@@ -45,13 +56,13 @@ const Graph = (props) => {
 
             <Controls
                 maxDate={maxDate}
-                narrationMode={narrationMode}
+                narrativeMode={narrativeMode}
                 playoffRound={playoffRound}
                 selectedStat={selectedStat}
                 selectedTeam={selectedTeam}
                 showOnlyPlayoffs={showOnlyPlayoffs}
                 updateMaxDate={setMaxDate}
-                updateNarrationMode={setNarrationMode}
+                updateNarrativeMode={updateNarrativeMode}
                 updatePlayoffRound={setPlayoffRound}
                 updateSelectedStat={setSelectedStat}
                 updateSelectedTeam={setSelectedTeam}
@@ -62,7 +73,8 @@ const Graph = (props) => {
 
             <Chart
                 data={seasonByTeam}
-                narrationMode={narrationMode}
+                maxDate={maxDate}
+                narrativeMode={narrativeMode}
                 rawData={data}
                 showOnlyPlayoffs={showOnlyPlayoffs}
                 stat={selectedStat}
