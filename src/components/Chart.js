@@ -97,54 +97,57 @@ const Chart = (props) => {
 
         // Add X grid lines with labels
         const dateRangeData = showOnlyPlayoffs
-            ? rawData.filter(game => !!game.playoff)
-            : rawData;
-        const xDomain = d3.extent(dateRangeData, d => new Date(d.date));
-        const lastDate = xDomain[1].setDate(xDomain[1].getDate() + 10);
-        const xScale = d3.scaleTime()
-            .domain([xDomain[0], lastDate])
-            .range([0, width - margin]);
-        const xAxis = d3.axisBottom(xScale)
-            .ticks(d3.timeWeek, '\'%y %b %d')
-            .tickSize(-height + margin);
-        newSvg.select('#x-axis').select('*').remove();
-        const xAxisGroup = newSvg.select('#x-axis')
-            .attr('transform', `translate(0, ${height - margin})`)
-            .call(xAxis);
-        xAxisGroup.select('.domain')
-            .attr('class', '');
-        xAxisGroup.selectAll('line')
-            .attr('class', 'text-gray-200');
-        xAxisGroup.selectAll('text')
-            .attr('class', 'text-base text-gray-500 transform -rotate-90 text-right')
-            .attr('y', -6)
-            .attr('x', -margin + 10);
+            ? playoffGames
+            : regularSeasonGames;
 
-        // Add Y grid lines with labels
-        const yScale = d3.scaleLinear()
-            .domain(getChartBounds(stat, bounds))
-            .range([height - margin , 0]);
-        const yAxis = d3.axisLeft(yScale)
-            .ticks(5)
-            .tickPadding(20)
-            .tickSize(-width + margin);
-        newSvg.select('#y-axis').select('*').remove();
-        const yAxisGroup = newSvg.select('#y-axis').call(yAxis);
-        yAxisGroup.select('.domain').remove();
-        yAxisGroup.selectAll('line')
-            .attr('class', 'text-gray-200');
-        yAxisGroup.selectAll('text')
-            .attr('class', 'text-base text-gray-800');
+        if (dateRangeData) {
+            const xDomain = d3.extent(dateRangeData, d => new Date(d.date));
+            const lastDate = xDomain[1].setDate(xDomain[1].getDate() + 10);
+            const xScale = d3.scaleTime()
+                .domain([xDomain[0], lastDate])
+                .range([0, width - margin]);
+            const xAxis = d3.axisBottom(xScale)
+                .ticks(d3.timeWeek, '\'%y %b %d')
+                .tickSize(-height + margin);
+            newSvg.select('#x-axis').select('*').remove();
+            const xAxisGroup = newSvg.select('#x-axis')
+                .attr('transform', `translate(0, ${height - margin})`)
+                .call(xAxis);
+            xAxisGroup.select('.domain')
+                .attr('class', '');
+            xAxisGroup.selectAll('line')
+                .attr('class', 'text-gray-200');
+            xAxisGroup.selectAll('text')
+                .attr('class', 'text-base text-gray-500 transform -rotate-90 text-right')
+                .attr('y', -6)
+                .attr('x', -margin + 10);
 
-        const newDataLineFunc = d3.line()
-            .x(d => xScale(new Date(d.date)))
-            .y(d => yScale(getStatAttribute(stat, d)));
+            // Add Y grid lines with labels
+            const yScale = d3.scaleLinear()
+                .domain(getChartBounds(stat, bounds))
+                .range([height - margin , 0]);
+            const yAxis = d3.axisLeft(yScale)
+                .ticks(5)
+                .tickPadding(20)
+                .tickSize(-width + margin);
+            newSvg.select('#y-axis').select('*').remove();
+            const yAxisGroup = newSvg.select('#y-axis').call(yAxis);
+            yAxisGroup.select('.domain').remove();
+            yAxisGroup.selectAll('line')
+                .attr('class', 'text-gray-200');
+            yAxisGroup.selectAll('text')
+                .attr('class', 'text-base text-gray-800');
 
-        setScaleX(() => xScale);
-        setScaleY(() => yScale);
-        setDataLineFunc(() => newDataLineFunc);
+            const newDataLineFunc = d3.line()
+                .x(d => xScale(new Date(d.date)))
+                .y(d => yScale(getStatAttribute(stat, d)));
 
-    }, [bounds, height, width, margin, rawData, stat, showOnlyPlayoffs]);
+            setScaleX(() => xScale);
+            setScaleY(() => yScale);
+            setDataLineFunc(() => newDataLineFunc);
+        }
+
+    }, [bounds, height, width, margin, stat, showOnlyPlayoffs, playoffGames, regularSeasonGames]);
 
     useEffect(() => {
         if (narrativeMode && seasonDataByTeam) {
@@ -190,6 +193,9 @@ const Chart = (props) => {
                     .filter(annotation => (new Date(annotation.date)) <= (new Date(maxDate)))
                     .map(annotation => {
                         const gameData = regularSeasonGames.find(game => {
+                            if (!game.team1) {
+                                console.log('game:', game);
+                            }
                             return game.date === annotation.date
                                 && (game.team1 === annotation.team
                                     || game.team2 === annotation.team)

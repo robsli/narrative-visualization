@@ -4,7 +4,7 @@ const getTeamMetricsForSeason = (
     data,
     teamAbbrev,
     endingMonth = null,
-    showOnlyPlayoffs = false,
+    showPlayoffs = false,
     playoffRound = null,
     season = '2021'
 ) => {
@@ -13,7 +13,11 @@ const getTeamMetricsForSeason = (
             return acc;
         }
 
-        if (showOnlyPlayoffs
+        if (!showPlayoffs && game.playoff) {
+            return acc;
+        }
+
+        if (showPlayoffs
             && (!game.playoff
                 || playoffOrder.indexOf(game.playoff) > playoffOrder.indexOf(playoffRound)
             )
@@ -21,7 +25,7 @@ const getTeamMetricsForSeason = (
             return acc;
         }
 
-        if (!showOnlyPlayoffs && endingMonth && !!endingMonth) {
+        if (!showPlayoffs && endingMonth && !!endingMonth) {
             // ex. 2021-01
             const endDate = new Date(endingMonth);
             const gameDate = new Date(game.date);

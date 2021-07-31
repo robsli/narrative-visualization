@@ -66,8 +66,6 @@ const maxDateOptions = [
     '2021-04',
     '2021-05',
     '2021-06',
-    '2021-07',
-    '2021-08',
 ];
 
 const playoffOrder = ['p', 'q', 's', 'c', 'f'];

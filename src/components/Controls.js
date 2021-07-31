@@ -55,17 +55,13 @@ const Controls = (props) => {
             </label>
 
             <label className="flex flex-col space-y-2">
-                <span className="text-sm font-medium text-gray-500 uppercase">Show Only Playoffs</span>
+                <span className="text-sm font-medium text-gray-500 uppercase">Show Games From</span>
                 <button
-                    className={`
-                        nowrap flex items-center w-16 p-1 overflow-hidden border rounded-full shadow-md
-                        ${showOnlyPlayoffs ? 'bg-green-500' : 'bg-gray-100'}
-                    `}
+                    className="nowrap flex overflow-hidden leading-tight text-gray-800 border rounded-full shadow-sm"
                     onClick={() => updateShowOnlyPlayoffs(!showOnlyPlayoffs)}
                 >
-                    <div className={`block w-7 h-7 rounded-full border-2
-                        ${showOnlyPlayoffs ? 'ml-auto border-white bg-white' : 'mr-auto bg-gray-50 border-gray-400'}
-                    `}></div>
+                    <span className={`block px-3 py-2 ${showOnlyPlayoffs ? 'bg-gray-100 text-gray-400 shadow-inner' : 'text-white bg-green-500 shadow'}`}>Regular Season</span>
+                    <span className={`block px-3 py-2 ${showOnlyPlayoffs ? 'text-white bg-green-500 shadow' : 'bg-gray-100 text-gray-400 shadow-inner'}`}>Playoffs</span>
                 </button>
             </label>
 
@@ -78,7 +74,7 @@ const Controls = (props) => {
                         onClick={prevMonth}
                     >{`<`}</button>
                     <label className="flex flex-col space-y-2">
-                        <span className="text-sm font-medium text-gray-500 uppercase">Max Date</span>
+                        <span className="text-sm font-medium text-gray-500 uppercase">Games Up To</span>
                         <select
                             id="statistic-select"
                             className="w-48 px-3 py-2 leading-tight text-gray-800 border rounded shadow"

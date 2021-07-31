@@ -4,9 +4,18 @@ const regularSeasonAnnotations = [
         team: 'LAL',
         date: '2021-01-01',
         title: 'Lakers Continue Dominance',
-        label: 'The LA Lakers picked off right where they left off after winning the championship last season with the ',
-        dx: 100,
-        dy: 100,
+        label: 'The LA Lakers picked off right where they left off after winning the championship last season.',
+        dx: 50,
+        dy: 200,
+    },
+    {
+        // First: within first month of play, the LA Lakers are the dominant team in the league
+        team: 'LAC',
+        date: '2021-01-31',
+        title: 'Clippers Raising',
+        label: 'The LA Clippers begins to show some promise, securing the best record in the league at 16-5.',
+        dx: 50,
+        dy: 200,
     },
     {
         // Utah Jazz: 20-1 run, best record in the league at 24-5
@@ -23,7 +32,7 @@ const regularSeasonAnnotations = [
         date: '2021-05-16',
         title: 'End of Regular Season',
         label: 'The Utah Jazz finish the regular season with the best record in the NBA (52 - 20) and the first seed in the Western Conference.',
-        dx: 100,
+        dx: -20,
         dy: 100,
     }
 ];

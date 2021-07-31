@@ -5,6 +5,6 @@
 @layer utilities {
     .annotation-note-bg {
         fill: #6B7280;
-        fill-opacity: 20%;
+        fill-opacity: 40%;
     }
 }

@@ -50,7 +50,7 @@ const DataPoint = (props) => {
                 r={5}
             ></circle>
 
-            { gameData.teamScore > gameData.opponentScore && (
+            { Number(gameData.teamScore) > Number(gameData.opponentScore) && (
                 <circle
                     className={`${wonGame ? 'text-green-500' : 'text-red-500'} animate-pulse cursor-pointer fill-current`}
                     cx={x}
