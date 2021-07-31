@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .annotation-note-bg {
+        fill: #6B7280;
+        fill-opacity: 20%;
+    }
+}

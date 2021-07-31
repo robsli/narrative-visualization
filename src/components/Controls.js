@@ -62,7 +62,6 @@ const Controls = (props) => {
                         ${showOnlyPlayoffs ? 'bg-green-500' : 'bg-gray-100'}
                     `}
                     onClick={() => updateShowOnlyPlayoffs(!showOnlyPlayoffs)}
-                    disabled={narrativeMode} // TODO: remove this once playoff annotations are complete & logic is done.
                 >
                     <div className={`block w-7 h-7 rounded-full border-2
                         ${showOnlyPlayoffs ? 'ml-auto border-white bg-white' : 'mr-auto bg-gray-50 border-gray-400'}
@@ -101,7 +100,7 @@ const Controls = (props) => {
             )}
 
             {/* Playoff Selector */}
-            { showOnlyPlayoffs && !narrativeMode && (
+            { showOnlyPlayoffs && (
                 <div className="flex-nowrap flex items-end ml-8 space-x-2">
                     <button
                         className="disabled:cursor-not-allowed disabled:text-gray-200 h-max-content px-3 py-2 leading-tight text-gray-800 border rounded shadow"
@@ -129,39 +128,37 @@ const Controls = (props) => {
                 </div>
             )}
 
-            {!narrativeMode && (
-                <>
-                    <label className="flex flex-col space-y-2">
-                        <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
-                        <select
-                            id="statistic-select"
-                            className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow cursor-pointer"
-                            disabled={narrativeMode}
-                            onChange={({ target }) => updateSelectedStat(target.value)}
-                            value={selectedStat}
-                        >
-                            { statSelectOptions.map((team) => (
-                                <option key={team.value} value={team.value}>{team.label}</option>
-                            ))}
-                        </select>
-                    </label>
+            <label className="flex flex-col space-y-2">
+                <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
+                <select
+                    id="statistic-select"
+                    className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow cursor-pointer"
+                    // disabled={narrativeMode}
+                    onChange={({ target }) => updateSelectedStat(target.value)}
+                    value={selectedStat}
+                >
+                    { statSelectOptions.map((team) => (
+                        <option key={team.value} value={team.value}>{team.label}</option>
+                    ))}
+                </select>
+            </label>
 
-                    <label className="flex flex-col space-y-2">
-                        <span className="text-sm font-medium text-gray-500 uppercase">Team</span>
-                        <select
-                            id="team-select"
-                            className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow"
-                            onChange={({ target }) => updateSelectedTeam(target.value)}
-                            value={selectedTeam}
-                            disabled={narrativeMode}
-                        >
-                            <option value=''>All</option>
-                            { teamSelectOptions.map((team) => (
-                                <option key={team.value} value={team.value}>{team.label}</option>
-                            ))}
-                        </select>
-                    </label>
-                </>
+            {!narrativeMode && (
+                <label className="flex flex-col space-y-2">
+                    <span className="text-sm font-medium text-gray-500 uppercase">Team</span>
+                    <select
+                        id="team-select"
+                        className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow"
+                        onChange={({ target }) => updateSelectedTeam(target.value)}
+                        value={selectedTeam}
+                        disabled={narrativeMode}
+                    >
+                        <option value=''>All</option>
+                        { teamSelectOptions.map((team) => (
+                            <option key={team.value} value={team.value}>{team.label}</option>
+                        ))}
+                    </select>
+                </label>
             )}
         </div>
     );

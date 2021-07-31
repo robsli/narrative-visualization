@@ -152,7 +152,7 @@ const getTeamMetricBounds = (rawData) => {
 const getStatAttribute = (stat, datum) => {
     switch (stat) {
         case 'elo':
-            return datum.teamPreElo;
+            return datum.teamPostElo;
         case 'raptor':
             return datum.teamPreRaptor;
         case 'score':

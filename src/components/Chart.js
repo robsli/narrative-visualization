@@ -7,6 +7,7 @@ import DataPoints from './DataPoints';
 import NarrativeAnnotations from './NarrativeAnnotations';
 
 import { regularSeasonAnnotations, playoffsAnnotations } from '../narrativeAnnotations';
+import { playoffOrder } from '../constants';
 
 const dimensions = {
     maxHeight: 800,
@@ -33,7 +34,10 @@ const getChartBounds = (stat, bounds) => {
 
 const Chart = (props) => {
     const {
-        data,
+        seasonDataByTeam,
+        regularSeasonGames,
+        playoffGames,
+        playoffRound,
         maxDate,
         narrativeMode,
         rawData,
@@ -143,8 +147,12 @@ const Chart = (props) => {
     }, [bounds, height, width, margin, rawData, stat, showOnlyPlayoffs]);
 
     useEffect(() => {
-        if (narrativeMode && data) {
-            const gameWithHighestPostElo = Object.values(data).reduce((highestEloGame, games) => {
+        if (narrativeMode && seasonDataByTeam) {
+            const gameWithHighestPostElo = Object.values(seasonDataByTeam).reduce((highestEloGame, games) => {
+                if (!games.length) {
+                    return highestEloGame;
+                }
+
                 const lastGame = games[games.length - 1];
 
                 return Number(lastGame.teamPostElo) > Number(highestEloGame.teamPostElo)
@@ -157,20 +165,54 @@ const Chart = (props) => {
             }
 
             if (showOnlyPlayoffs) {
-                // TODO
+                const annotations = playoffsAnnotations
+                    .filter(annotation => playoffOrder.indexOf(annotation.playoffRound) <= playoffOrder.indexOf(playoffRound))
+                    .map(annotation => {
+                        const gameData = playoffGames.find(game => {
+                            return game.date === annotation.date
+                                && (game.team1 === annotation.team
+                                    || game.team2 === annotation.team)
+                        })
+
+                        const isTeam1 = gameData.team1 === annotation.team;
+                        return {
+                            ...annotation,
+                            teamPostElo: isTeam1 ? gameData.elo1_post : gameData.elo2_post,
+                            teamPreRaptor: isTeam1 ? gameData.raptor1_pre : gameData.raptor2_pre,
+                            teamScore: isTeam1 ? gameData.score1 : gameData.score2,
+                            opponentScore: isTeam1 ? gameData.score2: gameData.score1,
+                        }
+                    });
+
+                setNarrativeAnnotationData(annotations);
             } else {
-                const annotations = regularSeasonAnnotations.filter(annotation => {
-                    return (new Date(annotation.date)) <= (new Date(maxDate));
-                })
+                const annotations = regularSeasonAnnotations
+                    .filter(annotation => (new Date(annotation.date)) <= (new Date(maxDate)))
+                    .map(annotation => {
+                        const gameData = regularSeasonGames.find(game => {
+                            return game.date === annotation.date
+                                && (game.team1 === annotation.team
+                                    || game.team2 === annotation.team)
+                        })
+
+                        const isTeam1 = gameData.team1 === annotation.team;
+                        return {
+                            ...annotation,
+                            teamPostElo: isTeam1 ? gameData.elo1_post : gameData.elo2_post,
+                            teamPreRaptor: isTeam1 ? gameData.raptor1_pre : gameData.raptor2_pre,
+                            teamScore: isTeam1 ? gameData.score1 : gameData.score2,
+                            opponentScore: isTeam1 ? gameData.score2: gameData.score1,
+                        }
+                    })
 
                 setNarrativeAnnotationData(annotations);
             }
         }
-    }, [narrativeMode, data, updateSelectedTeam, maxDate, showOnlyPlayoffs])
+    }, [rawData, narrativeMode, seasonDataByTeam, updateSelectedTeam, maxDate, showOnlyPlayoffs, playoffRound, playoffGames, regularSeasonGames])
 
     useEffect(() => {
-        if (data) {
-            const { orderedData, selectedTeamData } = Object.entries(data).reduce(({ selectedTeamData, orderedData }, teamData) => {
+        if (seasonDataByTeam) {
+            const { orderedData, selectedTeamData } = Object.entries(seasonDataByTeam).reduce(({ selectedTeamData, orderedData }, teamData) => {
                 const [teamId, teamGames] = teamData;
 
                 if (teamId === selectedTeam) {
@@ -183,14 +225,14 @@ const Chart = (props) => {
             setSelectedLineData(selectedTeamData);
             setDisplayData([...orderedData, selectedTeamData].filter(d => d));
         }
-    }, [data, selectedTeam, narrativeMode]);
+    }, [seasonDataByTeam, selectedTeam, narrativeMode]);
 
     return (
         <svg
             className="w-full h-full transition-all ease-in-out"
             ref={svgRef}
             width={width}
-            height={height + margin}
+            height={height && (height + margin)}
         >
             {width && height && (
                 <g id="chart-wrapper">
@@ -209,7 +251,7 @@ const Chart = (props) => {
                                 <DataPoints
                                     chartHeight={height}
                                     chartWidth={width}
-                                    data={selectedLineData.games}
+                                    data={narrativeMode ? narrativeAnnotationData : selectedLineData.games}
                                     narrativeMode={narrativeMode}
                                     scaleX={scaleX}
                                     scaleY={scaleY}
@@ -219,9 +261,10 @@ const Chart = (props) => {
 
                             {narrativeMode && narrativeAnnotationData && (
                                 <NarrativeAnnotations
+                                    gameData={narrativeAnnotationData}
                                     scaleX={scaleX}
                                     scaleY={scaleY}
-                                    gameData={narrativeAnnotationData}
+                                    stat={stat}
                                 />
                             )}
                         </g>
