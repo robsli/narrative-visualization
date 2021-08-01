@@ -38,14 +38,14 @@ const DataPoint = (props) => {
             )}
 
             <circle
-                className={`${wonGame ? 'text-green-500' : 'text-red-500'} cursor-pointer fill-current animate-pulse`}
+                className={`${wonGame ? 'text-green-500' : 'text-red-500'} cursor-help fill-current animate-pulse`}
                 cx={x}
                 cy={y}
                 r={7}
             ></circle>
 
             <circle
-                className="text-white cursor-pointer fill-current"
+                className="cursor-help text-white fill-current"
                 cx={x}
                 cy={y}
                 r={5}
@@ -53,7 +53,7 @@ const DataPoint = (props) => {
 
             { Number(gameData.teamScore) > Number(gameData.opponentScore) && (
                 <circle
-                    className={`${wonGame ? 'text-green-500' : 'text-red-500'} animate-pulse cursor-pointer fill-current`}
+                    className={`${wonGame ? 'text-green-500' : 'text-red-500'} animate-pulse cursor-help fill-current`}
                     cx={x}
                     cy={y}
                     r={3}

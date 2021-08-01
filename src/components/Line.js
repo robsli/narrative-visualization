@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 const Line = (props) => {
     const {
         pathData,
+        narrativeMode,
         selectedTeam,
         team,
         updateSelectedTeam,
@@ -25,13 +26,19 @@ const Line = (props) => {
         }
     }, [isHovering, isSelected, pathData]);
 
+    const handleUpdateSelectedTeam = () => {
+        if (!narrativeMode) {
+            updateSelectedTeam(team);
+        }
+    }
+
     return (
         <>
             <path
                 fill="none"
                 className={`
-                    stroke-current cursor-pointer
-                    transition-all ease-in-out
+                    stroke-current transition-all ease-in-out
+                    ${narrativeMode ? 'cursor-not-allowed' : 'cursor-pointer'}
                     ${isSelected
                         ? 'text-gray-600'
                         : isHovering
@@ -40,7 +47,7 @@ const Line = (props) => {
                 `.trim()}
                 d={pathData}
                 strokeWidth={isSelected || isHovering ? 6 : 2}
-                onClick={() => updateSelectedTeam(team)}
+                onClick={handleUpdateSelectedTeam}
                 onMouseOver={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
             ></path>

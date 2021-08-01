@@ -76,22 +76,23 @@ const Controls = (props) => {
                     </div>
                 </dl>
 
+                <div className="flex-nowrap flex items-center space-x-10">
+                    <div className={`w-20 h-0.5 bg-gray-300 hover:bg-purple-500 hover:h-1.5 ${narrativeMode ? 'cursor-not-allowed' : 'cursor-pointer'}`}></div>
+                    <span>{narrativeMode
+                        ? 'Hover over lines to see which team it is'
+                        : 'Hover over lines to see which team it is, click on line to select team'
+                    }</span>
+                </div>
                 { !narrativeMode && (
-                    <>
-                        <div className="flex-nowrap flex items-center space-x-10">
-                            <div className="w-20 h-0.5 bg-gray-300 hover:bg-purple-500 hover:h-1.5 cursor-pointer"></div>
-                            <span>Hover over lines to see that team, click on line to select.</span>
-                        </div>
-                        <div className="flex-nowrap flex items-center space-x-10">
-                            <div className="flex justify-around w-20">
-                                <div className="flex items-center justify-center w-3.5 h-3.5 border-2 border-green-500 rounded-full animate-pulse cursor-pointer">
-                                    <div className="animate-pulse w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                                </div>
-                                <div className="flex items-center justify-center w-3.5 h-3.5 border-2 border-red-500 rounded-full cursor-pointer"></div>
+                    <div className="flex-nowrap flex items-center space-x-10">
+                        <div className="flex justify-around w-20">
+                            <div className="flex items-center justify-center w-3.5 h-3.5 border-2 border-green-500 rounded-full animate-pulse cursor-help">
+                                <div className="animate-pulse w-1.5 h-1.5 bg-green-500 rounded-full"></div>
                             </div>
-                            <span>Hover over data points to see more information about the game.</span>
+                            <div className="flex items-center justify-center w-3.5 h-3.5 border-2 border-red-500 rounded-full cursor-help"></div>
                         </div>
-                    </>
+                        <span>Hover over data points to see more information about the game</span>
+                    </div>
                 )}
             </div>
 

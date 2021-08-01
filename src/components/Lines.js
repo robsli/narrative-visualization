@@ -5,8 +5,9 @@ import Line from './Line';
 const Lines = (props) => {
     const {
         data,
-        selectedTeam,
         dataLineFunc,
+        narrativeMode,
+        selectedTeam,
         updateSelectedTeam,
     } = props;
 
@@ -17,6 +18,7 @@ const Lines = (props) => {
                     <Line
                         key={`line-${team}`}
                         pathData={dataLineFunc(games)}
+                        narrativeMode={narrativeMode}
                         selectedTeam={selectedTeam}
                         team={team}
                         updateSelectedTeam={updateSelectedTeam}

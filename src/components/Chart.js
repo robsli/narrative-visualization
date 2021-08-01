@@ -246,8 +246,9 @@ const Chart = (props) => {
                         <g className="w-full h-full">
                             <Lines
                                 data={displayData}
-                                selectedTeam={selectedTeam}
                                 dataLineFunc={dataLineFunc}
+                                narrativeMode={narrativeMode}
+                                selectedTeam={selectedTeam}
                                 updateSelectedTeam={updateSelectedTeam}
                             />
 

@@ -32,8 +32,8 @@ const GameAnnotation = (props) => {
         ? `Elo ${eloDif > 0
             ? 'improves by ' + eloDif.toFixed(2)
             : 'decreases by ' + Math.abs(eloDif).toFixed(2)
-         } to ${Number(teamPostElo).toFixed(2)}`
-        : `RAPTOR performance at ${Number(teamPreRaptor).toFixed(2)}`;
+         } to ${Number(teamPostElo).toFixed(2)}.`
+        : `RAPTOR performance at ${Number(teamPreRaptor).toFixed(2)}.`;
 
     const label = `${winLoss}\n${statUpDown}`;
 
@@ -41,8 +41,8 @@ const GameAnnotation = (props) => {
         x, y, dy, dx,
         note: {
             label,
-            title: `${wonGame ? 'WIN against' : 'LOSS to'} ${opponent}\n(${teamScore} - ${opponentScore})`,
-            bgPadding: 20,
+            title: `${wonGame ? 'WIN against' : 'LOSS to'} ${opponent} (${teamScore} - ${opponentScore})`,
+            bgPadding: 12,
             wrapSplitter: /\n/,
         },
         color: wonGame ? '#047857' : '#B91C1C',
