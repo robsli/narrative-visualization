@@ -104,7 +104,7 @@ const Graph = (props) => {
                 updateShowOnlyPlayoffs={updatePlayoffControls}
             />
 
-            <Legend narrativeMode={narrativeMode} />
+            <Legend narrativeMode={narrativeMode} stat={selectedStat} />
 
             <Chart
                 rawData={data}

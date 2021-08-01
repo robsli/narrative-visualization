@@ -94,7 +94,7 @@ const Chart = (props) => {
 
         // Get the root container
         const newSvg = svgEl.select('#chart-wrapper')
-            .attr('transform', `translate(${margin}, 0)`);
+            .attr('transform', `translate(${margin}, ${margin / 2})`);
 
         // Add X grid lines with labels
         const dateRangeData = showOnlyPlayoffs
@@ -126,7 +126,7 @@ const Chart = (props) => {
             // Add Y grid lines with labels
             const yScale = d3.scaleLinear()
                 .domain(getChartBounds(stat, bounds))
-                .range([height - margin , 0]);
+                .range([height - (2 * margin) , 0]);
             const yAxis = d3.axisLeft(yScale)
                 .ticks(5)
                 .tickPadding(20)

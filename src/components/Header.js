@@ -41,7 +41,7 @@ const Header = () => (
                         <a
                             className="hover:underline text-blue-500"
                             href="https://fivethirtyeight.com/features/how-our-raptor-metric-works/"
-                        >How Our RAPTOR Metric Works <span className="text-xs">(wikipedia.com)</span></a>
+                        >How Our RAPTOR Metric Works <span className="text-xs">(fivethirtyeight.com)</span></a>
                     </span>
                 </p>
                 <p><span className="font-bold uppercase">NOTE:</span>The narrative mode is best viewed on full screen as the annotations will become squished together and harder to read on smaller screens. The chart is responsive with a minimum screen width of 872px.</p>

@@ -7,9 +7,10 @@ const GameAnnotation = (props) => {
     const {
         chartHeight,
         chartWidth,
+        gameData,
+        stat,
         x,
         y,
-        gameData,
     } = props;
 
     const gRef = useRef();
@@ -21,20 +22,30 @@ const GameAnnotation = (props) => {
         ? Math.min(100, chartHeight - y - 40)
         : Math.max(-100, - y + 40);
 
-    const { team, teamScore, opponent, opponentScore, wins, losses } = gameData || {};
+    const { team, teamScore, opponent, opponentScore, wins, losses, teamPreElo, teamPostElo, teamPreRaptor, playoff } = gameData || {};
     const wonGame = teamScore > opponentScore;
-    const label = wonGame
-        ? `${team} improves to ${wins} - ${losses}`
-        : `${team} slides to ${wins} - ${losses}`
+    const winLoss = wonGame
+        ? `${team} improves to ${wins} - ${losses}.`
+        : `${team} slides to ${wins} - ${losses}.`
+    const eloDif = Number(teamPostElo) - Number(teamPreElo);
+    const statUpDown = stat === 'elo'
+        ? `Elo ${eloDif > 0
+            ? 'improves by ' + eloDif.toFixed(2)
+            : 'decreases by ' + Math.abs(eloDif).toFixed(2)
+         } to ${Number(teamPostElo).toFixed(2)}`
+        : `RAPTOR performance at ${Number(teamPreRaptor).toFixed(2)}`;
+
+    const label = `${winLoss}\n${statUpDown}`;
 
     const annotations = [{
         x, y, dy, dx,
         note: {
             label,
-            title: `${wonGame ? 'WIN against' : 'LOSS to'} ${opponent} (${teamScore} - ${opponentScore})`,
+            title: `${wonGame ? 'WIN against' : 'LOSS to'} ${opponent}\n(${teamScore} - ${opponentScore})`,
             bgPadding: 20,
+            wrapSplitter: /\n/,
         },
-        color: wonGame ? '#10B981' : '#EF4444',
+        color: wonGame ? '#047857' : '#B91C1C',
     }]
 
     const makeAnnotations = annotation()

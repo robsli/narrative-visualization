@@ -30,9 +30,10 @@ const DataPoint = (props) => {
                 <GameAnnotation
                     chartHeight={chartHeight}
                     chartWidth={chartWidth}
+                    gameData={gameData}
+                    stat={stat}
                     x={x}
                     y={y}
-                    gameData={gameData}
                 />
             )}
 

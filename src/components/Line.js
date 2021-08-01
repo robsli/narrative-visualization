@@ -36,7 +36,7 @@ const Line = (props) => {
                         ? 'text-gray-600'
                         : isHovering
                             ? 'text-purple-500'
-                            : 'text-gray-200'}
+                            : 'text-gray-300'}
                 `.trim()}
                 d={pathData}
                 strokeWidth={isSelected || isHovering ? 6 : 2}

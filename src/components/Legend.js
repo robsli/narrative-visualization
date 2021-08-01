@@ -1,7 +1,10 @@
 import React from 'react';
 
-const Legend = ({ narrativeMode }) => (
-    <div className="flex justify-center w-full py-3">
+const Legend = ({ narrativeMode, stat }) => (
+    <div className="flex w-full py-3 space-x-8">
+        <div className="capitalize">
+            Statistic: {stat}
+        </div>
         <div className="flex-nowrap flex space-x-4">
             <div className="flex items-center space-x-2">
                 <div className="flex items-center justify-center w-3.5 h-3.5 border-2 border-green-500 rounded-full animate-pulse">
