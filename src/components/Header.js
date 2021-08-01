@@ -44,6 +44,7 @@ const Header = () => (
                         >How Our RAPTOR Metric Works <span className="text-xs">(wikipedia.com)</span></a>
                     </span>
                 </p>
+                <p><span className="font-bold uppercase">NOTE:</span>The narrative mode is best viewed on full screen as the annotations will become squished together and harder to read on smaller screens. The chart is responsive with a minimum screen width of 872px.</p>
             </div>
         </section>
     </header>

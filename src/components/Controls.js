@@ -102,17 +102,16 @@ const Controls = (props) => {
                         className="nowrap w-max-content flex overflow-hidden leading-tight text-gray-800 border rounded-full shadow-sm"
                         onClick={() => updateShowOnlyPlayoffs(!showOnlyPlayoffs)}
                     >
-                        <span className={`block px-3 py-2 w-40 ${showOnlyPlayoffs ? 'bg-gray-100 text-gray-400 shadow-inner' : 'text-white bg-green-600 shadow'}`}>Regular Season</span>
-                        <span className={`block px-3 py-2 w-40 ${showOnlyPlayoffs ? 'text-white bg-green-600 shadow' : 'bg-gray-100 text-gray-400 shadow-inner'}`}>Playoffs</span>
+                        <span className={`block px-3 py-2 lg:w-40 ${showOnlyPlayoffs ? 'bg-gray-100 text-gray-400 shadow-inner' : 'text-white bg-green-600 shadow'}`}>Regular Season</span>
+                        <span className={`block px-3 py-2 lg:w-40 ${showOnlyPlayoffs ? 'text-white bg-green-600 shadow' : 'bg-gray-100 text-gray-400 shadow-inner'}`}>Playoffs</span>
                     </button>
                 </label>
 
-                <label className="flex flex-col space-y-2">
+                <label className="flex flex-col max-w-xs space-y-2">
                     <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
                     <select
                         id="statistic-select"
                         className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow cursor-pointer"
-                        // disabled={narrativeMode}
                         onChange={({ target }) => updateSelectedStat(target.value)}
                         value={selectedStat}
                     >
@@ -142,16 +141,16 @@ const Controls = (props) => {
 
                 {/* Regular Season Date Selector */}
                 { !showOnlyPlayoffs && (
-                    <div className="flex-nowrap flex items-end space-x-2">
+                    <div className="lg:flex-nowrap lg:space-x-2 lg:space-y-0 lg:justify-start flex flex-wrap items-end justify-between space-y-2">
                         <button
-                            className="disabled:cursor-not-allowed disabled:text-gray-200 w-max-content hover:bg-green-500 disabled:bg-gray-300 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
+                            className="lg:order-1 disabled:cursor-not-allowed disabled:text-gray-200 w-max-content hover:bg-green-500 disabled:bg-gray-300 order-2 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
                             disabled={maxDateOptions.indexOf(maxDate) <= 0}
                             onClick={prevMonth}
                         >{`< Prev`}</button>
-                        <label className="flex flex-col space-y-2">
+                        <label className="lg:order-2 lg:w-auto flex flex-col order-1 w-full space-y-2">
                             <span className="text-sm font-medium text-gray-500 uppercase">Games Up To</span>
                             <select
-                                id="statistic-select"
+                                id="month-select"
                                 className="px-3 py-2 leading-tight text-gray-800 border rounded shadow"
                                 onChange={({ target }) => updateMaxDate(target.value)}
                                 value={maxDate}
@@ -163,7 +162,7 @@ const Controls = (props) => {
                             </select>
                         </label>
                         <button
-                            className="disabled:cursor-not-allowed disabled:text-gray-200 w-max-content hover:bg-green-500 disabled:bg-gray-300 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
+                            className="disabled:cursor-not-allowed disabled:text-gray-200 w-max-content hover:bg-green-500 disabled:bg-gray-300 order-3 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
                             disabled={!maxDate}
                             onClick={nextMonth}
                         >
@@ -190,7 +189,7 @@ const Controls = (props) => {
                         <label className="flex flex-col space-y-2">
                             <span className="text-sm font-medium text-gray-500 uppercase">Playoff Round</span>
                             <select
-                                id="statistic-select"
+                                id="playoff-round-select"
                                 className="w-48 px-3 py-2 leading-tight text-gray-800 border rounded shadow"
                                 onChange={({ target }) => updatePlayoffRound(target.value)}
                                 value={playoffRound}
