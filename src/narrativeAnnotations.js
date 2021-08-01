@@ -9,13 +9,20 @@ const regularSeasonAnnotations = [
         dy: 200,
     },
     {
-        // First: within first month of play, the LA Lakers are the dominant team in the league
         team: 'LAC',
         date: '2021-01-31',
         title: 'Clippers Raising',
         label: 'The LA Clippers begins to show some promise, securing the best record in the league at 16-5.',
-        dx: 50,
-        dy: 200,
+        dx: -50,
+        dy: 50,
+    },
+    {
+        team: 'PHI',
+        date: '2021-02-03',
+        title: 'Sixers Atop the East',
+        label: 'After a 4 game winning stream, the Philadephia 76ers lead the Eastern Conference with a 16-6 record.',
+        dx: 100,
+        dy: 150,
     },
     {
         // Utah Jazz: 20-1 run, best record in the league at 24-5
@@ -23,17 +30,40 @@ const regularSeasonAnnotations = [
         date: '2021-02-17',
         title: 'Utah Jazz Shine',
         label: 'The Utah Jazz go on a 20-1 run to become the undisputed best team in the NBA early on in the season.',
-        dx: 100,
-        dy: 100,
+        dx: 20,
+        dy: 50,
     },
     {
-        // 2021-05-16: playoffs start, Jazz are most dominant team in the league, with a record of 52-20
+        team: 'DEN',
+        date: '2021-04-01',
+        title: 'Denver Rises to 4th in West',
+        label: 'Behind a MVP-season performance from Nikola Jovic, the Denver Nuggets surge into 4th place in the West.',
+        dx: -120,
+        dy: 50,
+    },
+    {
+        team: 'OKC',
+        date: '2021-04-13',
+        title: 'Thunder Continue Descent',
+        label: 'The Oklahoma City Thunder go on a 14-game losing streak. They would go on to only win 2 of their last 25 games.',
+        dx: -40,
+        dy: -40,
+    },
+    {
+        team: 'POR',
+        date: '2021-05-16',
+        title: 'Portland Bounces Back',
+        label: 'After a sliding to 32-18 in April, Portland wins 10 of its last 12 games to secure the 6th spot in the West and narrowly avoid the play-in.',
+        dx: 20,
+        dy: 150,
+    },
+    {
         team: 'UTA',
         date: '2021-05-16',
         title: 'End of Regular Season',
         label: 'The Utah Jazz finish the regular season with the best record in the NBA (52 - 20) and the first seed in the Western Conference.',
-        dx: -20,
-        dy: 100,
+        dx: -150,
+        dy: 30,
     }
 ];
 

@@ -17,7 +17,7 @@ const DataPoints = (props) => {
         <g className="w-full h-full" id="data-points-wrapper">
             {data && data.map((game) => (
                 <DataPoint
-                    key={`game-data-${game.date}`}
+                    key={`game-data-${game.date}-${game.team}`}
                     chartHeight={chartHeight}
                     chartWidth={chartWidth}
                     gameData={game}
