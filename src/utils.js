@@ -142,7 +142,6 @@ const getMonthLabel = (date) => {
 }
 
 const getUniqueTeams = (games) => {
-    console.log('games:', games);
     const uniqueTeams = games.reduce((teams, game) => {
         const { team1, team2 } = game;
         const newTeams = [];

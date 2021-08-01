@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { csv } from 'd3';
 
 import Header from './components/Header';
-import Nav from './components/Nav';
-import { NBA_ELO_CSV, NBA_ELO_LATEST_CSV } from './constants';
+import { NBA_ELO_LATEST_CSV } from './constants';
 
 import Graph from './components/Graph';
 
@@ -27,19 +26,20 @@ function App() {
   }, []);
 
   return (
-    <main className="md:px-4 lg:px-8 w-full px-2 pb-8 mx-auto">
+    <>
       <Header />
-      <Nav />
-      <section className="">
-        { error && (
-          <div>There was an error loading the data</div>
-        )}
+      <main className="md:px-4 lg:px-8 w-full px-2 pb-8 mx-auto">
+        <section className="">
+          { error && (
+            <div>There was an error loading the data</div>
+          )}
 
-        {!error && data.length && (
-          <Graph data={data} />
-        )}
-      </section>
-    </main>
+          {!error && data.length && (
+            <Graph data={data} />
+          )}
+        </section>
+      </main>
+    </>
   );
 }
 
