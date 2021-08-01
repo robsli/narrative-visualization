@@ -54,8 +54,8 @@ const regularSeasonAnnotations = [
         date: '2021-05-16',
         title: 'Portland Bounces Back',
         label: 'After a sliding to 32-18 in April, Portland wins 10 of its last 12 games to secure the 6th spot in the West and narrowly avoid the play-in.',
-        dx: 20,
-        dy: 150,
+        dx: -20,
+        dy: 180,
     },
     {
         team: 'UTA',

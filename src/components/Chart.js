@@ -66,7 +66,8 @@ const Chart = (props) => {
         const handleResize = () => {
             if (svgRef && svgRef.current) {
                 const newWidth = Math.max(minWidth, svgRef.current.parentElement.clientWidth - margin)
-                const newHeight = Math.min(maxHeight, newWidth * 1.2);
+                const newHeight = Math.min(window.innerHeight, maxHeight, newWidth * 1.2);
+
                 setWidth(newWidth);
                 setHeight(newHeight);
             }
@@ -111,7 +112,7 @@ const Chart = (props) => {
                 .tickSize(-height + margin);
             newSvg.select('#x-axis').select('*').remove();
             const xAxisGroup = newSvg.select('#x-axis')
-                .attr('transform', `translate(0, ${height - margin})`)
+                .attr('transform', `translate(0, ${height - (2 * margin)})`)
                 .call(xAxis);
             xAxisGroup.select('.domain')
                 .attr('class', '');
@@ -232,7 +233,7 @@ const Chart = (props) => {
 
     return (
         <svg
-            className="w-full h-full transition-all ease-in-out"
+            className="w-full h-full max-h-screen transition-all ease-in-out"
             ref={svgRef}
             width={width}
             height={height && (height + margin)}

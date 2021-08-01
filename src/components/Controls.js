@@ -53,8 +53,8 @@ const Controls = (props) => {
     }
 
     return (
-        <section className="flex-nowrap border-b-300 flex w-full pb-4 border-0 border-b">
-            <div className="flex flex-col pr-4 space-y-4 border-0 border-r border-gray-200">
+        <section className="lg:flex-row border-b-300 lg:space-y-0 flex flex-col w-full pb-4 space-y-4 border-0 border-b">
+            <div className="lg:border-r lg:border-b-0 lg:pb-0 flex flex-col pb-4 pr-4 space-y-4 border-0 border-b border-gray-200">
                 <label className="flex flex-col space-y-2">
                     <span className="text-sm font-medium text-gray-500 uppercase">Visualization Mode</span>
                     <button
@@ -95,7 +95,7 @@ const Controls = (props) => {
                 )}
             </div>
 
-            <div className="w-96 flex flex-col flex-grow px-4 space-y-4">
+            <div className="w-96 md:text-sm lg:text-base flex flex-col flex-grow px-4 space-y-4 text-xs">
                 <label className="flex flex-col space-y-2">
                     <span className="text-sm font-medium text-gray-500 uppercase">Show Games From</span>
                     <button
@@ -107,7 +107,7 @@ const Controls = (props) => {
                     </button>
                 </label>
 
-                <label className="flex flex-col max-w-xs space-y-2">
+                <label className="lg:max-w-xs flex flex-col space-y-2">
                     <span className="text-sm font-medium text-gray-500 uppercase">Statistic</span>
                     <select
                         id="statistic-select"
@@ -143,7 +143,7 @@ const Controls = (props) => {
                 { !showOnlyPlayoffs && (
                     <div className="lg:flex-nowrap lg:space-x-2 lg:space-y-0 lg:justify-start flex flex-wrap items-end justify-between space-y-2">
                         <button
-                            className="lg:order-1 disabled:cursor-not-allowed disabled:text-gray-200 w-max-content hover:bg-green-500 disabled:bg-gray-300 order-2 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
+                            className="lg:order-1 disabled:cursor-not-allowed whitespace-nowrap disabled:text-gray-200 w-min hover:bg-green-500 disabled:bg-gray-300 order-2 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
                             disabled={maxDateOptions.indexOf(maxDate) <= 0}
                             onClick={prevMonth}
                         >{`< Prev`}</button>
@@ -162,7 +162,7 @@ const Controls = (props) => {
                             </select>
                         </label>
                         <button
-                            className="disabled:cursor-not-allowed disabled:text-gray-200 w-max-content hover:bg-green-500 disabled:bg-gray-300 order-3 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
+                            className="disabled:cursor-not-allowed whitespace-nowrap disabled:text-gray-200 w-min hover:bg-green-500 disabled:bg-gray-300 order-3 px-3 py-2 leading-tight text-white transition-colors duration-100 bg-green-600 border rounded shadow"
                             disabled={!maxDate}
                             onClick={nextMonth}
                         >

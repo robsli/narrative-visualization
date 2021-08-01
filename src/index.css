@@ -2,9 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --sm: '640px';
+    --md: '768px';
+    --lg: '1024px';
+    --xl: '1280px';
+    --2xl: '1536px';
+}
+
 @layer utilities {
+
     .annotation-note-bg {
         fill: #6B7280;
         fill-opacity: 40%;
+    }
+
+    .annotation-note-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+    }
+
+    .annotation-note-label {
+        font-size: 0.75rem;
+        font-weight: normal;
+        line-height: 1rem;
+    }
+
+    @media screen and (min-width: 1024px) {
+
+        .annotation-note-label {
+            font-size: 0.875rem;
+            font-weight: normal;
+            line-height: 1.25rem;
+        }
     }
 }
