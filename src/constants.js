@@ -41,7 +41,6 @@ const teamSelectOptions = Object.entries(teamNames).map(([id, fullName]) => (
 const statSelectOptions = [
     { value: 'elo', label: 'ELO' },
     { value: 'raptor', label: 'Raptor' },
-    { value: 'score', label: 'Score' },
 ];
 
 const monthNames = [

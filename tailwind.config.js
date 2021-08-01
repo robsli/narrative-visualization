@@ -11,7 +11,9 @@ module.exports = {
   variants: {
     extend: {
       cursor: ['disabled'],
+      backgroundColor: ['disabled'],
       textColor: ['disabled'],
+      height: ['hover'],
     },
   },
   plugins: [],

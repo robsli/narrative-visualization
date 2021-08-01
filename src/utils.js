@@ -104,8 +104,6 @@ const getMetricBounds = (rawData) => {
             elo2_post,
             raptor1_pre,
             raptor2_pre,
-            score1,
-            score2
         } = game;
 
         return {
@@ -113,43 +111,12 @@ const getMetricBounds = (rawData) => {
             eloMax: Math.max(acc.eloMax, elo1_pre, elo2_pre, elo1_post, elo2_post),
             raptorMin: Math.min(acc.raptorMin, raptor1_pre, raptor2_pre),
             raptorMax: Math.max(acc.raptorMax, raptor1_pre, raptor2_pre),
-            scoreMin: Math.min(acc.scoreMin, score1, score2),
-            scoreMax: Math.max(acc.scoreMax, score1, score2),
         }
     }, {
         eloMin: 99999,
         eloMax: 0,
         raptorMin: 99999,
         raptorMax: 0,
-        scoreMin: 99999,
-        scoreMax: 0,
-    })
-}
-
-const getTeamMetricBounds = (rawData) => {
-    return rawData.reduce((acc, game) => {
-        const {
-            teamPreElo,
-            teamPostElo,
-            teamPreRaptor,
-            teamScore,
-        } = game;
-
-        return {
-            eloMin: Math.min(acc.eloMin, teamPreElo, teamPostElo),
-            eloMax: Math.max(acc.eloMax, teamPreElo, teamPostElo),
-            raptorMin: Math.min(acc.raptorMin, teamPreRaptor),
-            raptorMax: Math.max(acc.raptorMax, teamPreRaptor),
-            scoreMin: Math.min(acc.scoreMin, teamScore),
-            scoreMax: Math.max(acc.scoreMax, teamScore),
-        }
-    }, {
-        eloMin: 99999,
-        eloMax: 0,
-        raptorMin: 99999,
-        raptorMax: 0,
-        scoreMin: 99999,
-        scoreMax: 0,
     })
 }
 
@@ -159,8 +126,6 @@ const getStatAttribute = (stat, datum) => {
             return datum.teamPostElo;
         case 'raptor':
             return datum.teamPreRaptor;
-        case 'score':
-            return datum.teamScore;
         default:
             console.error('Unrecognized statistic category:', stat);
             return null
@@ -176,10 +141,29 @@ const getMonthLabel = (date) => {
     return `${month} ${year}`
 }
 
+const getUniqueTeams = (games) => {
+    console.log('games:', games);
+    const uniqueTeams = games.reduce((teams, game) => {
+        const { team1, team2 } = game;
+        const newTeams = [];
+        if (!teams.includes(team1)) {
+            newTeams.push(team1);
+        }
+
+        if (!teams.includes(team2)) {
+            newTeams.push(team2);
+        }
+
+        return teams.concat(newTeams);
+    }, []);
+
+    return uniqueTeams.sort();
+}
+
 export {
     getMetricBounds,
     getMonthLabel,
+    getUniqueTeams,
     getStatAttribute,
-    getTeamMetricBounds,
     getTeamMetricsForSeason,
 }

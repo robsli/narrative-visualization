@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { teamNames } from '../constants';
-import { getTeamMetricsForSeason } from '../utils';
+import { getTeamMetricsForSeason, getUniqueTeams } from '../utils';
 import Chart from './Chart';
 import Controls from './Controls';
 import Legend from './Legend';
@@ -20,6 +20,8 @@ const Graph = (props) => {
     const [seasonByTeam, setSeasonByTeam] = useState();
     const [regularSeasonGames, setRegularSeasonGames] = useState();
     const [playoffGames, setPlayoffGames] = useState();
+    const [allTeams, setAllTeams] = useState([]);
+    const [playoffTeams, setPlayoffTeams] = useState([]);
 
     useEffect(() => {
         const byTeam = Object.keys(teamNames).reduce((acc, team) => {
@@ -51,6 +53,19 @@ const Graph = (props) => {
         setPlayoffGames(pGames);
     }, [data]);
 
+    useEffect(() => {
+        if (regularSeasonGames) {
+            const uniqueTeams = getUniqueTeams(regularSeasonGames);
+            setAllTeams(uniqueTeams);
+        }
+
+        if (playoffGames) {
+            const uniquePlayoffTeams = getUniqueTeams(playoffGames);
+            setPlayoffTeams(uniquePlayoffTeams);
+        }
+
+    }, [regularSeasonGames, playoffGames]);
+
     const updatePlayoffControls = (showPlayoffs) => {
         setShowOnlyPlayoffs(showPlayoffs);
         if (showPlayoffs) {
@@ -80,6 +95,7 @@ const Graph = (props) => {
                 selectedStat={selectedStat}
                 selectedTeam={selectedTeam}
                 showOnlyPlayoffs={showOnlyPlayoffs}
+                teamOptions={showOnlyPlayoffs ? playoffTeams : allTeams}
                 updateMaxDate={setMaxDate}
                 updateNarrativeMode={updateNarrativeMode}
                 updatePlayoffRound={setPlayoffRound}

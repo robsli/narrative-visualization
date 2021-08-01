@@ -193,9 +193,6 @@ const Chart = (props) => {
                     .filter(annotation => (new Date(annotation.date)) <= (new Date(maxDate)))
                     .map(annotation => {
                         const gameData = regularSeasonGames.find(game => {
-                            if (!game.team1) {
-                                console.log('game:', game);
-                            }
                             return game.date === annotation.date
                                 && (game.team1 === annotation.team
                                     || game.team2 === annotation.team)
