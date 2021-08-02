@@ -57,7 +57,7 @@ const GameAnnotation = (props) => {
     }]
 
     const makeAnnotations = annotation()
-        .editMode(true)
+        .editMode(false)
         .type(annotationLabel)
         .annotations(annotations);
 

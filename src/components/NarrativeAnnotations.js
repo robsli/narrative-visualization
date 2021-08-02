@@ -28,7 +28,7 @@ const NarrativeAnnotations = (props) => {
     });
 
     const makeAnnotations = annotation()
-        .editMode(true)
+        .editMode(false)
         .notePadding(15)
         .type(annotationLabel)
         .annotations(annotations);
