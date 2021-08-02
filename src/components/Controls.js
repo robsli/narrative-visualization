@@ -127,7 +127,7 @@ const Controls = (props) => {
                         <span className="text-sm font-medium text-gray-500 uppercase">Team</span>
                         <select
                             id="team-select"
-                            className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow"
+                            className="disabled:cursor-not-allowed px-3 py-2 leading-tight text-gray-800 border rounded shadow cursor-pointer"
                             onChange={({ target }) => updateSelectedTeam(target.value)}
                             value={selectedTeam}
                             disabled={narrativeMode}
@@ -152,7 +152,7 @@ const Controls = (props) => {
                             <span className="text-sm font-medium text-gray-500 uppercase">Games Up To</span>
                             <select
                                 id="month-select"
-                                className="px-3 py-2 leading-tight text-gray-800 border rounded shadow"
+                                className="px-3 py-2 leading-tight text-gray-800 border rounded shadow cursor-pointer"
                                 onChange={({ target }) => updateMaxDate(target.value)}
                                 value={maxDate}
                             >

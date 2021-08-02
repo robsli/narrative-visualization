@@ -1,5 +1,6 @@
 const NBA_ELO_CSV = 'https://projects.fivethirtyeight.com/nba-model/nba_elo.csv';
 const NBA_ELO_LATEST_CSV = 'https://projects.fivethirtyeight.com/nba-model/nba_elo_latest.csv';
+const BACKUP_LATEST_CSV = 'https://robsli.github.io/narrative-visualization/data/nba_elo_latest.csv';
 
 const teamNames = {
     'ATL': 'Atlanta Hawks',
@@ -77,6 +78,7 @@ const playoffIdentifiers = {
 }
 
 export {
+    BACKUP_LATEST_CSV,
     monthNames,
     NBA_ELO_CSV,
     NBA_ELO_LATEST_CSV,
