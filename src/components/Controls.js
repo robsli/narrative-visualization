@@ -79,8 +79,8 @@ const Controls = (props) => {
                 <div className="flex-nowrap flex items-center space-x-10">
                     <div className={`w-20 h-0.5 bg-gray-300 hover:bg-purple-500 hover:h-1.5 ${narrativeMode ? 'cursor-not-allowed' : 'cursor-pointer'}`}></div>
                     <span>{narrativeMode
-                        ? 'Hover over lines to see which team it is'
-                        : 'Hover over lines to see which team it is, click on line to select team'
+                        ? 'Hover over a line to see which team it is'
+                        : 'Hover over a line to see which team it is, click on line to select team'
                     }</span>
                 </div>
                 { !narrativeMode && (
