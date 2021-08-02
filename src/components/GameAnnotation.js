@@ -3,6 +3,14 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { annotationLabel, annotation } from 'd3-svg-annotation';
 
+/**
+ * Adding d3-annotation note labels or else tailwind purges them from the production build.
+ *
+ * .annotation-note-bg
+ * .annotation-note-title
+ * .annotation-note-label
+ */
+
 const GameAnnotation = (props) => {
     const {
         chartHeight,
